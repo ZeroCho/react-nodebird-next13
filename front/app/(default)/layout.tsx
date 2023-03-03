@@ -1,6 +1,7 @@
 "use client";
 
 import NavigationBox from "@/components/common/NavigationBox";
+import SearchInput from "@/components/common/SearchInput";
 import SignInForm from "@/components/common/SignInForm";
 import { colors, Container, Grid, Link } from "@mui/material";
 
@@ -29,6 +30,7 @@ export default function DefaultLayout({
             padding: "0.8rem",
           }}
         >
+          <SearchInput />
           {children}
         </Grid>
         <Grid
