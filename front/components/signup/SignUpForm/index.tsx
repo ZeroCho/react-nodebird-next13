@@ -11,11 +11,27 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { useMutation } from "@tanstack/react-query/build/lib/useMutation";
-import React, { useEffect, useState, useCallback, ChangeEvent } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  ChangeEvent,
+  FormEvent,
+} from "react";
 
 const SignUpForm = () => {
-  const { mutate } = useMutation(signUpAPI);
+  const router = useRouter();
+  const { mutate, isLoading } = useMutation(signUpAPI, {
+    onSuccess: () => {
+      router.push("/");
+    },
+    onError: (error: any) => {
+      alert(error.response.data);
+    },
+  });
 
   const [email, handleEmail] = useInput("");
   const [nickname, handleNickname] = useInput("");
@@ -31,13 +47,18 @@ const SignUpForm = () => {
     setTermError(false);
   }, []);
 
-  const handleSubmit = useCallback(() => {
-    if (passwordError && !term) {
-      return setTermError(true);
-    }
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      console.log(passwordError, term);
+      if (passwordError || !term) {
+        return setTermError(true);
+      }
 
-    mutate({ email, nickname, password });
-  }, []);
+      mutate({ email, nickname, password });
+    },
+    [email, mutate, nickname, password, passwordError, term]
+  );
 
   useEffect(() => {
     setPasswordError(password !== passwordCheck);
@@ -46,7 +67,7 @@ const SignUpForm = () => {
   return (
     <FormControl
       error={passwordError && termError}
-      component="fieldset"
+      component="form"
       onSubmit={handleSubmit}
     >
       <Grid container spacing={2}>
@@ -54,6 +75,7 @@ const SignUpForm = () => {
           <TextField
             fullWidth
             required
+            type="email"
             id="outlined-required"
             label="이메일"
             value={email}
@@ -102,12 +124,14 @@ const SignUpForm = () => {
             label="제로초 말을 잘 들을 것을 동의합니다."
           />
           {termError && (
-            <FormHelperText>약관에 동의하셔야 합니다.</FormHelperText>
+            <FormHelperText sx={{ color: "red" }}>
+              약관에 동의하셔야 합니다.
+            </FormHelperText>
           )}
         </Grid>
         <Grid item xs={12}>
           <Button type="submit" variant="contained">
-            회원가입
+            {isLoading ? <CircularProgress /> : "회원가입"}
           </Button>
         </Grid>
       </Grid>
