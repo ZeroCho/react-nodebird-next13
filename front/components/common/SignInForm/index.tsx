@@ -58,7 +58,7 @@ function SignInForm() {
           <Button variant="contained" onClick={handleForm}>
             로그인
           </Button>
-          <Button variant="outlined" onClick={() => router.push("/signin")}>
+          <Button variant="outlined" onClick={() => router.push("/signup")}>
             회원가입
           </Button>
         </Grid>

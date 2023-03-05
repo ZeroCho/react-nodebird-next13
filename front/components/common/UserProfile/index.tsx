@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Avatar,
   BottomNavigation,
@@ -35,10 +37,7 @@ const UserProfile = () => {
         <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
         <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
         <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-        <BottomNavigationAction
-          label="logout"
-          icon={<Button sx={{ float: "right" }}>logOut</Button>}
-        />
+        <BottomNavigationAction label="logout" icon={<Button>logOut</Button>} />
       </BottomNavigation>
     </Card>
   );
