@@ -10,13 +10,26 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useCallback } from "react";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box } from "@mui/system";
+import { useMutation } from "@tanstack/react-query";
+import { logOutAPI } from "@/apis/auth";
 
 const UserProfile = () => {
+  const { mutate } = useMutation(logOutAPI, {
+    onError: (error: any) => {
+      alert(error.response?.data);
+    },
+  });
+
+  const handleLogOut = useCallback(() => {
+    console.log("logout mutate");
+    mutate();
+  }, [mutate]);
+
   return (
     <Card>
       <CardActionArea>
@@ -37,7 +50,10 @@ const UserProfile = () => {
         <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
         <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
         <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="logout" icon={<Button>logOut</Button>} />
+        <BottomNavigationAction
+          label="logout"
+          icon={<Button onClick={handleLogOut}>logOut</Button>}
+        />
       </BottomNavigation>
     </Card>
   );
