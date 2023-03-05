@@ -3,20 +3,24 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import User from "@/typings/user";
 
 export interface GlobalState {
-  userInfo: User | undefined;
+  userInfo: User | {};
 }
 
 const initialState: GlobalState = {
-  userInfo: undefined,
+  userInfo: {},
 };
 
 export const globalSlice = createSlice({
   name: "global",
   initialState,
-  reducers: {},
+  reducers: {
+    setUserInfo: (state, action: PayloadAction<User>) => {
+      state.userInfo = action.payload.id;
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const {} = globalSlice.actions;
+export const { setUserInfo } = globalSlice.actions;
 
 export default globalSlice.reducer;

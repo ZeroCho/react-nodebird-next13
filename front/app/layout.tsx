@@ -2,6 +2,8 @@ import { use } from "react";
 import { cookies, headers } from "next/headers";
 import Providers from "./(default)/providers";
 import ClientLayout from "./(default)/ClientLayout";
+import { setUserInfo } from "@/reducers/slice";
+import { useDispatch } from "react-redux";
 
 export const metadata = {
   title: "NodeBird",
@@ -23,11 +25,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const me = await getUserInfo();
+  console.log(me);
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <ClientLayout me={me}>{children}</ClientLayout>
+        <Providers me={me}>
+          <ClientLayout>{children}</ClientLayout>
         </Providers>
       </body>
     </html>

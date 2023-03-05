@@ -5,16 +5,18 @@ import NavigationBox from "@/components/common/NavigationBox";
 import SearchInput from "@/components/common/SearchInput";
 import SignInForm from "@/components/common/SignInForm";
 import UserProfile from "@/components/common/UserProfile";
+import { RootState } from "@/store/store";
 import User from "@/typings/user";
 import { colors, Container, Grid, Link } from "@mui/material";
+import { useSelector } from "react-redux";
 
 export default function ClientLayout({
   children,
-  me,
 }: {
   children: React.ReactNode;
-  me: User;
 }) {
+  const me = useSelector((state: RootState) => state.global.userInfo);
+  console.log(me);
   return (
     <Container maxWidth="xl">
       <Grid container>
