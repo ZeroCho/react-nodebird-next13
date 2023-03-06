@@ -30,7 +30,6 @@ const TweetCardList: FC<Prop> = ({ initialTweets }) => {
       },
     }
   );
-  console.log(data);
   return data ? (
     <>
       {data.pages.map((page) =>

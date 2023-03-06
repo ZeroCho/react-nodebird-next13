@@ -7,12 +7,17 @@ import FormControl from "@mui/joy/FormControl";
 import { Button } from "@mui/material";
 import List from "@mui/material/List/List";
 import ListItem from "@mui/material/ListItem/ListItem";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { FormEvent, useCallback } from "react";
 
 const PostForm = () => {
+  const queryClient = useQueryClient();
   const [text, handleText, setText] = useInput("");
-  const { mutate } = useMutation(addPostAPI, {});
+  const { mutate } = useMutation(addPostAPI, {
+    onSuccess: () => {
+      queryClient.refetchQueries(["tweets"]);
+    },
+  });
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {

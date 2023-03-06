@@ -14,13 +14,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import ChatIcon from "@mui/icons-material/Chat";
 import Tweet from "@/typings/tweet";
+import dayjs from "dayjs";
 
 interface Prop {
   data: Tweet;
 }
 
 const TweetCard: FC<Prop> = ({ data }) => {
-  console.log(data);
   return (
     <Card>
       <CardHeader
@@ -35,7 +35,7 @@ const TweetCard: FC<Prop> = ({ data }) => {
           </IconButton>
         }
         title={data.User.nickname}
-        subheader={data.createdAt}
+        subheader={dayjs(data.createdAt).format("YYYY.MM.DD")}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
