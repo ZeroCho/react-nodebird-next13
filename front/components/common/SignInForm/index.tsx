@@ -2,12 +2,15 @@
 
 import { signInAPI } from "@/apis/signin";
 import useInput from "@/hooks/useInput";
+import { setUserInfo } from "@/reducers/slice";
 import { Box, Button, colors, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 
 function SignInForm() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [email, handleEmail] = useInput("");
   const [password, handlePassword] = useInput("");
@@ -15,6 +18,9 @@ function SignInForm() {
   const { mutate } = useMutation(signInAPI, {
     onError: (error: any) => {
       alert(error.response?.data);
+    },
+    onSuccess: (data) => {
+      dispatch(setUserInfo(data));
     },
   });
 

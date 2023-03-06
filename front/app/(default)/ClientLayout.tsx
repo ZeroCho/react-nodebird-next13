@@ -16,7 +16,6 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const me = useSelector((state: RootState) => state.global.userInfo);
-  console.log(me);
   return (
     <Container maxWidth="xl">
       <Grid container>

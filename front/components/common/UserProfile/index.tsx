@@ -17,8 +17,11 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box } from "@mui/system";
 import { useMutation } from "@tanstack/react-query";
 import { logOutAPI } from "@/apis/auth";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/reducers/slice";
 
 const UserProfile = () => {
+  const dispatch = useDispatch();
   const { mutate } = useMutation(logOutAPI, {
     onError: (error: any) => {
       alert(error.response?.data);
@@ -26,9 +29,9 @@ const UserProfile = () => {
   });
 
   const handleLogOut = useCallback(() => {
-    console.log("logout mutate");
     mutate();
-  }, [mutate]);
+    dispatch(setUserInfo(undefined));
+  }, [dispatch, mutate]);
 
   return (
     <Card>

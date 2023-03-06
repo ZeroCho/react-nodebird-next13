@@ -3,19 +3,22 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import User from "@/typings/user";
 
 export interface GlobalState {
-  userInfo: User | {};
+  userInfo: User | undefined;
 }
 
 const initialState: GlobalState = {
-  userInfo: {},
+  userInfo: undefined,
 };
 
 export const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
-    setUserInfo: (state, action: PayloadAction<User>) => {
-      state.userInfo = action.payload.id;
+    setUserInfo: (state, action: PayloadAction<User | undefined>) => {
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
     },
   },
 });
