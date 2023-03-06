@@ -1,11 +1,11 @@
-import Tweet from "@/components/common/Tweet";
+import TweetCard from "@/components/common/TweetCard";
 import React from "react";
 
 const PostPage = () => {
   return (
     <>
-      <Tweet />
-      <Tweet />
+      <TweetCard />
+      <TweetCard />
     </>
   );
 };

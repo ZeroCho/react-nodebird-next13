@@ -1,3 +1,5 @@
+"use client";
+
 import { addPostAPI } from "@/apis/tweet";
 import useInput from "@/hooks/useInput";
 import { Textarea } from "@mui/joy";
