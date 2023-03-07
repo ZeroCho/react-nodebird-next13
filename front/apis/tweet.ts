@@ -13,3 +13,13 @@ export function loadPostsAPI(lastId?: number) {
 export function removePostAPI(data: number) {
   return api.delete(`/post/${data}`).then((response) => response.data);
 }
+
+export function addCommentAPI(data: {
+  postId: number;
+  content: string;
+  userId: number;
+}) {
+  return api
+    .post(`/post/${data.postId}/comment`, data)
+    .then((response) => response.data); // POST /post/1/comment
+}

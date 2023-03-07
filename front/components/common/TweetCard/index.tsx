@@ -96,7 +96,7 @@ const TweetCard: FC<Prop> = ({ data }) => {
           <ChatIcon />
         </IconButton>
       </CardActions>
-      <TweetCommentList open={isCommentOpen} />
+      <TweetCommentList open={isCommentOpen} data={data} />
     </Card>
   );
 };

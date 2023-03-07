@@ -1,12 +1,46 @@
+import { addCommentAPI } from "@/apis/tweet";
 import useInput from "@/hooks/useInput";
+import { RootState } from "@/store/store";
 import { Textarea } from "@mui/joy";
 import { Button, FormControl, List, ListItem } from "@mui/material";
-import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { FC, FormEvent, useCallback } from "react";
+import { useSelector } from "react-redux";
 
-const TweetCommentForm = () => {
-  const [comment, handleComment] = useInput("");
+interface Props {
+  postId: number;
+}
+
+const TweetCommentForm: FC<Props> = ({ postId }) => {
+  const queryClient = useQueryClient();
+  const me = useSelector((state: RootState) => state.global.userInfo);
+  const [comment, handleComment, setComment] = useInput("");
+
+  const { mutate } = useMutation(addCommentAPI, {
+    onSuccess: () => {
+      setComment("");
+      // queryClient.refetchQueries(["tweets"]);
+    },
+  });
+
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!comment.trim()) {
+        return alert("댓글을 작성하세요.");
+      }
+      console.log(comment);
+      me && mutate({ userId: me.id, content: comment, postId: postId });
+    },
+    [comment, me, mutate, postId]
+  );
+
   return (
-    <FormControl component="form" sx={{ width: "100%" }}>
+    <FormControl
+      component="form"
+      sx={{ width: "100%" }}
+      onSubmit={handleSubmit}
+    >
       <List>
         <ListItem>
           <Textarea
