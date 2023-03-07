@@ -1,3 +1,4 @@
+import Comment from "./comment";
 import User from "./user";
 
 export default interface Tweet {

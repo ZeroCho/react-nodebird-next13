@@ -26,6 +26,7 @@ import dayjs from "dayjs";
 import useInput from "@/hooks/useInput";
 import { removePostAPI } from "@/apis/tweet";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import TweetCommentList from "../TweetCommentList";
 
 interface Prop {
   data: Tweet;
@@ -34,6 +35,7 @@ interface Prop {
 const TweetCard: FC<Prop> = ({ data }) => {
   const queryClient = useQueryClient();
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
   const { mutate } = useMutation(() => removePostAPI(data.id), {
     onSuccess: () => {
       queryClient.refetchQueries(["tweets"]);
@@ -42,6 +44,10 @@ const TweetCard: FC<Prop> = ({ data }) => {
 
   const toggleDropDown = () => {
     setIsDropDownOpen((pre) => !pre);
+  };
+
+  const toggleComment = () => {
+    setIsCommentOpen((pre) => !pre);
   };
 
   return (
@@ -86,10 +92,11 @@ const TweetCard: FC<Prop> = ({ data }) => {
         <IconButton>
           <FavoriteIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={toggleComment}>
           <ChatIcon />
         </IconButton>
       </CardActions>
+      <TweetCommentList open={isCommentOpen} data={data} />
     </Card>
   );
 };
