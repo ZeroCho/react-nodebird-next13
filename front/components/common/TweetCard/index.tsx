@@ -5,22 +5,45 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Grow,
   IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Paper,
+  Popper,
   Typography,
 } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import ChatIcon from "@mui/icons-material/Chat";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Tweet from "@/typings/tweet";
 import dayjs from "dayjs";
+import useInput from "@/hooks/useInput";
+import { removePostAPI } from "@/apis/tweet";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Prop {
   data: Tweet;
 }
 
 const TweetCard: FC<Prop> = ({ data }) => {
+  const queryClient = useQueryClient();
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const { mutate } = useMutation(() => removePostAPI(data.id), {
+    onSuccess: () => {
+      queryClient.refetchQueries(["tweets"]);
+    },
+  });
+
+  const toggleDropDown = () => {
+    setIsDropDownOpen((pre) => !pre);
+  };
+
   return (
     <Card>
       <CardHeader
@@ -30,9 +53,23 @@ const TweetCard: FC<Prop> = ({ data }) => {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <>
+            <IconButton aria-label="settings" onClick={toggleDropDown}>
+              <MoreVertIcon />
+            </IconButton>
+            <Paper
+              sx={{
+                display: isDropDownOpen ? "block" : "none",
+                position: "absolute",
+              }}
+            >
+              <List disablePadding>
+                <ListItemButton onClick={() => mutate()}>
+                  <DeleteIcon />
+                </ListItemButton>
+              </List>
+            </Paper>
+          </>
         }
         title={data.User.nickname}
         subheader={dayjs(data.createdAt).format("YYYY.MM.DD")}

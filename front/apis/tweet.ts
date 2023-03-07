@@ -9,3 +9,7 @@ export function loadPostsAPI(lastId?: number) {
     .get(`/posts?lastId=${lastId || 0}`)
     .then((response) => response.data);
 }
+
+export function removePostAPI(data: number) {
+  return api.delete(`/post/${data}`).then((response) => response.data);
+}
