@@ -17,6 +17,7 @@ import {
 import React from "react";
 import FolderIcon from "@mui/icons-material/Folder";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditUserInfo from "@/components/profile/EditUserInfo";
 
 const ProfilePage = () => {
   return (
@@ -29,22 +30,7 @@ const ProfilePage = () => {
           padding: "1rem",
         }}
       >
-        <Typography variant="h6" sx={{ textAlign: "center", mb: "1rem" }}>
-          회원정보 수정
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              required
-              id="outlined-required"
-              label="닉네임 변경"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained">정보 수정</Button>
-          </Grid>
-        </Grid>
+        <EditUserInfo />
       </Box>
       <Box
         component="div"

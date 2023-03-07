@@ -10,8 +10,10 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import PersonIcon from "@mui/icons-material/Person";
+import { useRouter } from "next/navigation";
 
 function NavigationBox() {
+  const router = useRouter();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const toggleDrawer = () => {
@@ -34,7 +36,7 @@ function NavigationBox() {
         </ListItemButton>
       </ListItem>
       <ListItem>
-        <ListItemButton>
+        <ListItemButton onClick={() => router.push("/profile")}>
           <ListItemAvatar>
             <Avatar>
               <PersonIcon />
