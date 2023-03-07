@@ -19,7 +19,7 @@ const TweetCommentForm: FC<Props> = ({ postId }) => {
   const { mutate } = useMutation(addCommentAPI, {
     onSuccess: () => {
       setComment("");
-      // queryClient.refetchQueries(["tweets"]);
+      queryClient.refetchQueries(["tweets"]);
     },
   });
 
@@ -52,8 +52,8 @@ const TweetCommentForm: FC<Props> = ({ postId }) => {
                 id: "unique-id",
               },
             }}
-            minRows={4}
-            maxRows={4}
+            minRows={2}
+            maxRows={2}
           />
         </ListItem>
         <ListItem>

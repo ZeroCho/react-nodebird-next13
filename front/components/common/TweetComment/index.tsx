@@ -1,3 +1,4 @@
+import Comment from "@/typings/comment";
 import {
   Avatar,
   Divider,
@@ -7,18 +8,23 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import React, { FC } from "react";
 
-const TweetComment = () => {
+interface Props {
+  comment: Comment;
+}
+
+const TweetComment: FC<Props> = ({ comment }) => {
   return (
     <List sx={{ width: "100%", bgcolor: "background.paper" }}>
       <ListItem>
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar>{comment.User.nickname && comment.User.nickname[0]}</Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary="Remy"
-          secondary={" I'll be in your neighborhood doing errands this…"}
+          primary={comment.User.nickname}
+          secondary={comment.content}
         />
       </ListItem>
     </List>
