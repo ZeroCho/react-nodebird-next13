@@ -1,6 +1,7 @@
 "use client";
 import {
   Avatar,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -25,8 +26,16 @@ import Tweet from "@/typings/tweet";
 import dayjs from "dayjs";
 import useInput from "@/hooks/useInput";
 import { removePostAPI } from "@/apis/tweet";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import TweetCommentList from "../TweetCommentList";
+import { followAPI, unfollowAPI } from "@/apis/user";
+import User from "@/typings/user";
+import { loadMyInfoAPI } from "@/apis/auth";
 
 interface Prop {
   data: Tweet;
@@ -34,11 +43,28 @@ interface Prop {
 
 const TweetCard: FC<Prop> = ({ data }) => {
   const queryClient = useQueryClient();
+  const { data: me } = useQuery<User>(["user"], loadMyInfoAPI);
+  const isFollowing = me?.Followings?.find((v) => v.id === data.User.id);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const { mutate } = useMutation(() => removePostAPI(data.id), {
+    onSuccess: () => {},
+  });
+
+  const { mutate: FollowMutate } = useMutation(followAPI, {
     onSuccess: () => {
-      queryClient.refetchQueries(["tweets"]);
+      queryClient.refetchQueries(["user"]);
+    },
+    onError: () => {
+      alert("팔로우에 실패하였습니다");
+    },
+  });
+  const { mutate: unFollowMutate } = useMutation(unfollowAPI, {
+    onSuccess: () => {
+      queryClient.refetchQueries(["user"]);
+    },
+    onError: () => {
+      alert("언팔로우에 실패하였습니다");
     },
   });
 
@@ -77,7 +103,21 @@ const TweetCard: FC<Prop> = ({ data }) => {
             </Paper>
           </>
         }
-        title={data.User.nickname}
+        title={
+          <>
+            {data.User.nickname}
+            {me?.id !== data.User.id &&
+              (isFollowing ? (
+                <Button onClick={() => unFollowMutate(data.User.id)}>
+                  언팔로우
+                </Button>
+              ) : (
+                <Button onClick={() => FollowMutate(data.User.id)}>
+                  팔로우
+                </Button>
+              ))}
+          </>
+        }
         subheader={dayjs(data.createdAt).format("YYYY.MM.DD")}
       />
       <CardContent>

@@ -23,7 +23,10 @@ function NavigationBox() {
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <ListItem>
-        <ListItemButton sx={{ padding: "1rem" }}>
+        <ListItemButton
+          sx={{ padding: "1rem" }}
+          onClick={() => router.push("/")}
+        >
           <Typography
             variant="h5"
             color="inherit"
