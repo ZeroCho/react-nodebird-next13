@@ -59,6 +59,7 @@ const TweetCard: FC<Prop> = ({ data }) => {
       alert("팔로우에 실패하였습니다");
     },
   });
+
   const { mutate: unFollowMutate } = useMutation(unfollowAPI, {
     onSuccess: () => {
       queryClient.refetchQueries(["user"]);

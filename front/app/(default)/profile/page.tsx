@@ -1,26 +1,49 @@
 "use client";
 
-import {
-  Avatar,
-  Box,
-  Button,
-  colors,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, colors, Grid, Typography } from "@mui/material";
 import React from "react";
-import FolderIcon from "@mui/icons-material/Folder";
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditUserInfo from "@/components/profile/EditUserInfo";
 import FollowList from "@/components/profile/FollowList";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import User from "@/typings/user";
+import { loadMyInfoAPI } from "@/apis/auth";
+import { loadFollowersAPI, loadFollowingsAPI } from "@/apis/user";
+import { AxiosError } from "axios";
 
 const ProfilePage = () => {
+  const {
+    data: followings,
+    isLoading: followingsLoading,
+    error: followingsError,
+    fetchNextPage: fetchNextFollowings,
+    hasNextPage: hasNextFollowings,
+  } = useInfiniteQuery<User[], AxiosError>(
+    ["followings"],
+    ({ pageParam = 5 }) => loadFollowingsAPI(pageParam),
+    {
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.length < 3) return;
+        return pages.length;
+      },
+    }
+  );
+
+  const {
+    data: followers,
+    isLoading: followersLoading,
+    error: followersError,
+    fetchNextPage: fetchNextFollowers,
+    hasNextPage: hasNextFollowers,
+  } = useInfiniteQuery<User[], AxiosError>(
+    ["followers"],
+    ({ pageParam = 5 }) => loadFollowersAPI(pageParam),
+    {
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.length < 3) return;
+        return pages.length;
+      },
+    }
+  );
   return (
     <>
       <Box
@@ -46,7 +69,13 @@ const ProfilePage = () => {
             <Typography variant="h6" sx={{ textAlign: "center", mb: "1rem" }}>
               팔로잉
             </Typography>
-            <FollowList />
+            {followings && (
+              <FollowList
+                data={followings}
+                fetchNextPage={fetchNextFollowings}
+                hasNextPage={hasNextFollowings}
+              />
+            )}
           </Box>
         </Grid>
         <Grid item md={6}>
@@ -61,7 +90,13 @@ const ProfilePage = () => {
             <Typography variant="h6" sx={{ textAlign: "center", mb: "1rem" }}>
               팔로우
             </Typography>
-            <FollowList />
+            {followers && (
+              <FollowList
+                data={followers}
+                fetchNextPage={fetchNextFollowers}
+                hasNextPage={hasNextFollowers}
+              />
+            )}
           </Box>
         </Grid>
       </Grid>
