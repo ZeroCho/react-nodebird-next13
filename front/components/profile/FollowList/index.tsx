@@ -9,9 +9,11 @@ import {
 } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 import DeleteIcon from "@mui/icons-material/Delete";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import User from "@/typings/user";
 import { InfiniteData } from "@tanstack/react-query";
+import useFollowMutation from "@/hooks/mutations/useFollowMutation";
+import useUnFollowMutation from "@/hooks/mutations/useUnFollowMutation";
 
 interface Prop {
   data: InfiniteData<User[]>;
@@ -20,6 +22,7 @@ interface Prop {
 }
 
 const FollowList: FC<Prop> = ({ data, fetchNextPage, hasNextPage }) => {
+  const { mutate: unFollowMutate } = useUnFollowMutation();
   return (
     <>
       {data.pages.map((page) =>
@@ -27,7 +30,11 @@ const FollowList: FC<Prop> = ({ data, fetchNextPage, hasNextPage }) => {
           <List key={user.id}>
             <ListItem
               secondaryAction={
-                <IconButton edge="end" aria-label="delete">
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => unFollowMutate(user.id)}
+                >
                   <DeleteIcon />
                 </IconButton>
               }

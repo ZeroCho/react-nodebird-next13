@@ -6,14 +6,10 @@ import {
   CardActions,
   CardContent,
   CardHeader,
-  Grow,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
-  ListItemIcon,
   Paper,
-  Popper,
   Typography,
 } from "@mui/material";
 import React, { FC, useState } from "react";
@@ -36,6 +32,8 @@ import TweetCommentList from "../TweetCommentList";
 import { followAPI, unfollowAPI } from "@/apis/user";
 import User from "@/typings/user";
 import { loadMyInfoAPI } from "@/apis/auth";
+import useFollowMutation from "@/hooks/mutations/useFollowMutation";
+import useUnFollowMutation from "@/hooks/mutations/useUnFollowMutation";
 
 interface Prop {
   data: Tweet;
@@ -51,23 +49,9 @@ const TweetCard: FC<Prop> = ({ data }) => {
     onSuccess: () => {},
   });
 
-  const { mutate: FollowMutate } = useMutation(followAPI, {
-    onSuccess: () => {
-      queryClient.refetchQueries(["user"]);
-    },
-    onError: () => {
-      alert("팔로우에 실패하였습니다");
-    },
-  });
+  const { mutate: FollowMutate } = useFollowMutation();
 
-  const { mutate: unFollowMutate } = useMutation(unfollowAPI, {
-    onSuccess: () => {
-      queryClient.refetchQueries(["user"]);
-    },
-    onError: () => {
-      alert("언팔로우에 실패하였습니다");
-    },
-  });
+  const { mutate: unFollowMutate } = useUnFollowMutation();
 
   const toggleDropDown = () => {
     setIsDropDownOpen((pre) => !pre);
