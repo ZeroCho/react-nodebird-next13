@@ -17,11 +17,13 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box } from "@mui/system";
 import { useMutation } from "@tanstack/react-query";
 import { logOutAPI } from "@/apis/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/reducers/slice";
+import { RootState } from "@/store/store";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
+  const me = useSelector((state: RootState) => state.global.userInfo);
   const { mutate } = useMutation(logOutAPI, {
     onError: (error: any) => {
       alert(error.response?.data);
@@ -38,13 +40,13 @@ const UserProfile = () => {
       <CardActionArea>
         <CardContent>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Avatar>R</Avatar>
+            <Avatar>{me?.nickname[0]}</Avatar>
             <Typography
               variant="h6"
               component="h6"
               sx={{ padding: "0.3rem", marginLeft: "0.5rem" }}
             >
-              Ray
+              {me?.nickname}
             </Typography>
           </Box>
         </CardContent>

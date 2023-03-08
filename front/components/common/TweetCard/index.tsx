@@ -1,18 +1,15 @@
 "use client";
 import {
   Avatar,
+  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
-  Grow,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
-  ListItemIcon,
   Paper,
-  Popper,
   Typography,
 } from "@mui/material";
 import React, { FC, useState } from "react";
@@ -25,8 +22,18 @@ import Tweet from "@/typings/tweet";
 import dayjs from "dayjs";
 import useInput from "@/hooks/useInput";
 import { removePostAPI } from "@/apis/tweet";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import TweetCommentList from "../TweetCommentList";
+import { followAPI, unfollowAPI } from "@/apis/user";
+import User from "@/typings/user";
+import { loadMyInfoAPI } from "@/apis/auth";
+import useFollowMutation from "@/hooks/mutations/useFollowMutation";
+import useUnFollowMutation from "@/hooks/mutations/useUnFollowMutation";
 
 interface Prop {
   data: Tweet;
@@ -34,13 +41,17 @@ interface Prop {
 
 const TweetCard: FC<Prop> = ({ data }) => {
   const queryClient = useQueryClient();
+  const { data: me } = useQuery<User>(["user"], loadMyInfoAPI);
+  const isFollowing = me?.Followings?.find((v) => v.id === data.User.id);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const { mutate } = useMutation(() => removePostAPI(data.id), {
-    onSuccess: () => {
-      queryClient.refetchQueries(["tweets"]);
-    },
+    onSuccess: () => {},
   });
+
+  const { mutate: FollowMutate } = useFollowMutation();
+
+  const { mutate: unFollowMutate } = useUnFollowMutation();
 
   const toggleDropDown = () => {
     setIsDropDownOpen((pre) => !pre);
@@ -77,7 +88,21 @@ const TweetCard: FC<Prop> = ({ data }) => {
             </Paper>
           </>
         }
-        title={data.User.nickname}
+        title={
+          <>
+            {data.User.nickname}
+            {me?.id !== data.User.id &&
+              (isFollowing ? (
+                <Button onClick={() => unFollowMutate(data.User.id)}>
+                  언팔로우
+                </Button>
+              ) : (
+                <Button onClick={() => FollowMutate(data.User.id)}>
+                  팔로우
+                </Button>
+              ))}
+          </>
+        }
         subheader={dayjs(data.createdAt).format("YYYY.MM.DD")}
       />
       <CardContent>
