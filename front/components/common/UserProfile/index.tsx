@@ -48,7 +48,7 @@ const UserProfile = () => {
 
   return (
     <Card sx={{ width: "100%" }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleProfile}>
         <CardContent>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Avatar>{me?.nickname[0]}</Avatar>
