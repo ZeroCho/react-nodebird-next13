@@ -8,6 +8,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  colors,
   Typography,
 } from "@mui/material";
 import React, { useCallback } from "react";
@@ -20,9 +21,11 @@ import { logOutAPI } from "@/apis/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/reducers/slice";
 import { RootState } from "@/store/store";
+import { useRouter } from "next/navigation";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const me = useSelector((state: RootState) => state.global.userInfo);
   const { mutate } = useMutation(logOutAPI, {
     onError: (error: any) => {
@@ -35,9 +38,17 @@ const UserProfile = () => {
     dispatch(setUserInfo(undefined));
   }, [dispatch, mutate]);
 
+  const handleProfile = useCallback(() => {
+    router.push("/profile");
+  }, []);
+
+  const handleUserTweets = useCallback(() => {
+    router.push(`/user/${me?.id}`);
+  }, []);
+
   return (
-    <Card>
-      <CardActionArea>
+    <Card sx={{ width: "100%" }}>
+      <CardActionArea onClick={handleProfile}>
         <CardContent>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Avatar>{me?.nickname[0]}</Avatar>
@@ -51,13 +62,26 @@ const UserProfile = () => {
           </Box>
         </CardContent>
       </CardActionArea>
-      <BottomNavigation>
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+      <BottomNavigation showLabels>
         <BottomNavigationAction
-          label="logout"
-          icon={<Button onClick={handleLogOut}>logOut</Button>}
+          label={me?.Followers.length}
+          icon={"팔로우"}
+          onClick={handleProfile}
+        />
+        <BottomNavigationAction
+          label={me?.Followings.length}
+          icon={"팔로워"}
+          onClick={handleProfile}
+        />
+        <BottomNavigationAction
+          label={me?.Posts.length}
+          icon={"짹짹"}
+          onClick={handleUserTweets}
+        />
+        <BottomNavigationAction
+          label="로그아웃"
+          onClick={handleLogOut}
+          sx={{ color: colors.red[500] }}
         />
       </BottomNavigation>
     </Card>

@@ -23,3 +23,15 @@ export function addCommentAPI(data: {
     .post(`/post/${data.postId}/comment`, data)
     .then((response) => response.data); // POST /post/1/comment
 }
+
+export function retweetAPI(data: number) {
+  return api.post(`/post/${data}/retweet`).then((response) => response.data);
+}
+
+export function likePostAPI(data: number) {
+  return api.patch(`/post/${data}/like`).then((response) => response.data);
+}
+
+export function unlikePostAPI(data: number) {
+  return api.delete(`/post/${data}/like`).then((response) => response.data);
+}
