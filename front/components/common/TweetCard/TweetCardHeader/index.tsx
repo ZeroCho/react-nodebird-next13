@@ -10,7 +10,7 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { FC, useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useFollowMutation from "@/hooks/mutations/useFollowMutation";
 import useUnFollowMutation from "@/hooks/mutations/useUnFollowMutation";
 import { removePostAPI } from "@/apis/tweet";
@@ -25,6 +25,7 @@ interface Props {
 }
 
 const TweetCardHeader: FC<Props> = ({ user, postId, createdAt }) => {
+  const queryClient = useQueryClient();
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const { data: me } = useQuery<User>(["user"], loadMyInfoAPI);
   const isFollowing = me?.Followings?.find((v) => v.id === user.id);
@@ -32,7 +33,9 @@ const TweetCardHeader: FC<Props> = ({ user, postId, createdAt }) => {
   const { mutate: removePostMutate } = useMutation(
     () => removePostAPI(postId),
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        queryClient.refetchQueries(["tweets"]);
+      },
     }
   );
   const { mutate: followMutate } = useFollowMutation();

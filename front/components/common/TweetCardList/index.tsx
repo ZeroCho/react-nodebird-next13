@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import Tweet from "@/typings/tweet";
 import React, { FC } from "react";
 import { loadPostsAPI } from "@/apis/tweet";
-import TweetCard from "@/components/common/TweetCard";
+import { ReTweetCard, TweetCard } from "@/components/common/TweetCard";
 
 interface Prop {
   initialTweets: Tweet[];
@@ -30,10 +30,23 @@ const TweetCardList: FC<Prop> = ({ initialTweets }) => {
       },
     }
   );
+
   return data ? (
     <>
       {data.pages.map((page) =>
-        page.map((tweet) => <TweetCard data={tweet} key={tweet.id} />)
+        page.map((tweet) =>
+          tweet.Retweet && tweet.RetweetId ? (
+            <>
+              <ReTweetCard
+                retweet={tweet.Retweet}
+                data={tweet}
+                key={tweet.id}
+              />
+            </>
+          ) : (
+            <TweetCard data={tweet} key={tweet.id} />
+          )
+        )
       )}
     </>
   ) : (

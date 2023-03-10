@@ -17,15 +17,23 @@ import Tweet from "@/typings/tweet";
 interface Props {
   setIsCommentOpen: Dispatch<SetStateAction<boolean>>;
   postId: number;
-  likers: Partial<User>[];
+  likers?: Partial<User>[];
 }
 
-const TweetCardActions: FC<Props> = ({ setIsCommentOpen, postId, likers }) => {
+const TweetCardActions: FC<Props> = ({
+  setIsCommentOpen,
+  postId,
+  likers = [],
+}) => {
   const { data: me } = useQuery<User>(["user"], loadMyInfoAPI);
   const isLiked = likers.find((v) => me?.id && v.id === me.id);
   const queryClient = useQueryClient();
 
-  const { mutate: reTweetMutation } = useMutation(retweetAPI);
+  const { mutate: reTweetMutation } = useMutation(retweetAPI, {
+    onSettled: (data) => {
+      queryClient.refetchQueries(["tweets"]);
+    },
+  });
 
   const toggleComment = () => {
     setIsCommentOpen((pre) => !pre);

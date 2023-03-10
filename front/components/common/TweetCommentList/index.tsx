@@ -19,7 +19,7 @@ const TweetCommentList: FC<Props> = ({ open, data }) => {
         </Typography>
         <TweetCommentForm postId={data.id} />
         <>
-          {data.Comments.map((comment) => (
+          {data.Comments?.map((comment) => (
             <TweetComment comment={comment} key={comment.id} />
           ))}
         </>
