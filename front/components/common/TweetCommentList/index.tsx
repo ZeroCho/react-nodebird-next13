@@ -15,7 +15,7 @@ const TweetCommentList: FC<Props> = ({ open, data }) => {
     <Card sx={{ display: open ? "block" : "none" }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          댓글
+          댓글({data.Comments.length})
         </Typography>
         <TweetCommentForm postId={data.id} />
         <>
