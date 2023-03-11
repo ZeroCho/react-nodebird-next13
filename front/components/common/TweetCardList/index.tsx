@@ -1,36 +1,16 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import Tweet from "@/typings/tweet";
 import React, { FC } from "react";
 import { loadPostsAPI } from "@/apis/tweet";
 import { ReTweetCard, TweetCard } from "@/components/common/TweetCard";
 
 interface Prop {
-  initialTweets: Tweet[];
+  data: InfiniteData<Tweet[]>;
 }
 
-const TweetCardList: FC<Prop> = ({ initialTweets }) => {
-  const {
-    data,
-    isLoading: loadPostsLoading,
-    fetchNextPage,
-  } = useInfiniteQuery<Tweet[]>(
-    ["tweets"],
-    ({ pageParam = "" }) => loadPostsAPI(pageParam),
-    {
-      getNextPageParam: (lastPage) => {
-        return lastPage?.[lastPage.length - 1]?.id;
-      },
-      initialData: () => {
-        return {
-          pageParams: [undefined],
-          pages: [initialTweets],
-        };
-      },
-    }
-  );
-
+const TweetCardList: FC<Prop> = ({ data }) => {
   return data ? (
     <>
       {data.pages.map((page) =>

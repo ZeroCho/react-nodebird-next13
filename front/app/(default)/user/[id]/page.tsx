@@ -1,8 +1,8 @@
-import TweetCard from "@/components/common/TweetCard";
 import React from "react";
+import ClientPage from "./ClientPage";
 
-const UserTweetPage = () => {
-  return <>유저페이지</>;
+const UserTweetPage = ({ params }: { params: { id: string } }) => {
+  return <ClientPage params={params} />;
 };
 
 export default UserTweetPage;
