@@ -23,7 +23,7 @@ import { setUserInfo } from "@/reducers/slice";
 import { RootState } from "@/store/store";
 import { useRouter } from "next/navigation";
 
-const UserProfile = () => {
+const MyProfile = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const me = useSelector((state: RootState) => state.global.userInfo);
@@ -88,4 +88,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default MyProfile;
