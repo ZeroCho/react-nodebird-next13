@@ -14,7 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import React, { FormEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const EditUserInfo = () => {
+const EditUserProfile = () => {
   const me = useSelector((state: RootState) => state.global.userInfo);
   const [editNickname, handleEditNickname, setEditNickname] =
     useInput<string>("");
@@ -65,4 +65,4 @@ const EditUserInfo = () => {
   );
 };
 
-export default EditUserInfo;
+export default EditUserProfile;

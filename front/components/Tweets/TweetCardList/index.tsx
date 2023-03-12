@@ -4,7 +4,7 @@ import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import Tweet from "@/typings/tweet";
 import React, { FC } from "react";
 import { loadPostsAPI } from "@/apis/tweet";
-import { ReTweetCard, TweetCard } from "@/components/common/TweetCard";
+import { ReTweetCard, TweetCard } from "@/components/Tweets/TweetCard";
 
 interface Prop {
   data: InfiniteData<Tweet[]>;

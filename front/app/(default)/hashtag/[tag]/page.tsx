@@ -1,4 +1,4 @@
-import TweetCard from "@/components/common/TweetCard";
+import TweetCard from "@/components/Tweets/TweetCard";
 import React from "react";
 
 const HashTagPage = () => {

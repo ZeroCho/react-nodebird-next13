@@ -1,6 +1,6 @@
 import { loadPostsAPI } from "@/apis/tweet";
-import PostForm from "@/components/common/PostForm";
-import TweetCardList from "@/components/common/TweetCardList";
+import TweetCardForm from "@/components/Tweets/TweetCardForm";
+import TweetCardList from "@/components/Tweets/TweetCardList";
 import React from "react";
 
 async function getTweets() {
@@ -14,7 +14,7 @@ const Page = async () => {
   return (
     <>
       <TweetCardList initialTweets={tweets}></TweetCardList>
-      <PostForm></PostForm>
+      <TweetCardForm></TweetCardForm>
     </>
   );
 };

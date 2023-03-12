@@ -1,10 +1,10 @@
 "use client";
 
 import { loadMyInfoAPI } from "@/apis/auth";
-import NavigationBox from "@/components/common/NavigationBox";
-import SearchInput from "@/components/common/SearchInput";
-import SignInForm from "@/components/common/SignInForm";
-import UserProfile from "@/components/common/UserProfile";
+import NavigationBox from "@/components/Layouts/NavigationBox";
+import SearchInput from "@/components/Layouts/SearchInput";
+import SignInForm from "@/components/Auth/SignInForm";
+import UserProfile from "@/components/User/UserProfile";
 import { RootState } from "@/store/store";
 import User from "@/typings/user";
 import { colors, Container, Grid, Link } from "@mui/material";

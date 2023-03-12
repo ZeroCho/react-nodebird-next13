@@ -10,7 +10,7 @@ import ListItem from "@mui/material/ListItem/ListItem";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { FormEvent, useCallback } from "react";
 
-const PostForm = () => {
+const TweetCardForm = () => {
   const queryClient = useQueryClient();
   const [text, handleText, setText] = useInput("");
   const { mutate } = useMutation(addPostAPI, {
@@ -62,4 +62,4 @@ const PostForm = () => {
   );
 };
 
-export default PostForm;
+export default TweetCardForm;

@@ -1,7 +1,7 @@
 "use client";
 
 import { loadUserPostsAPI } from "@/apis/user";
-import TweetCardList from "@/components/common/TweetCardList";
+import TweetCardList from "@/components/Tweets/TweetCardList";
 import Tweet from "@/typings/tweet";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";

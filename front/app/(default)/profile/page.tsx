@@ -2,8 +2,8 @@
 
 import { Box, colors, Grid, Typography } from "@mui/material";
 import React from "react";
-import EditUserInfo from "@/components/profile/EditUserInfo";
-import FollowList from "@/components/profile/FollowList";
+import EditUserProfile from "@/components/User/EditUserProfile";
+import FollowList from "@/components/User/FollowList";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import User from "@/typings/user";
 import { loadMyInfoAPI } from "@/apis/auth";
@@ -54,7 +54,7 @@ const ProfilePage = () => {
           padding: "1rem",
         }}
       >
-        <EditUserInfo />
+        <EditUserProfile />
       </Box>
       <Grid container spacing={2}>
         <Grid item md={6}>
