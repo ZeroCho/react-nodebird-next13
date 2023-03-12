@@ -25,3 +25,9 @@ export function loadFollowersAPI(page: number) {
     .get(`/user/followers?limit=${page}`)
     .then((response) => response.data);
 }
+
+export function loadUserPostsAPI(data: number, lastId?: number) {
+  return api
+    .get(`/user/${data}/posts?lastId=${lastId || 0}`)
+    .then((response) => response.data);
+}
