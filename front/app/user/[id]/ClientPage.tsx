@@ -1,10 +1,10 @@
 "use client";
 
-import { loadUserPostsAPI } from "@/apis/user";
+import { loadUserAPI, loadUserPostsAPI } from "@/apis/user";
 import TweetCardList from "@/components/Tweets/TweetCardList";
 import UserProfile from "@/components/Users/UserProfile";
 import Tweet from "@/typings/tweet";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import React, { FC } from "react";
 
@@ -27,10 +27,13 @@ const ClientPage: FC<ClientPageProps> = ({ params }) => {
       },
     }
   );
-  if (!data) return <></>;
+  const { data: userInfo } = useQuery(["user", id], () =>
+    loadUserAPI(Number(id))
+  );
+  if (!data || !userInfo) return <></>;
   return (
     <>
-      <UserProfile />
+      <UserProfile userInfo={userInfo} />
       <TweetCardList data={data} />
     </>
   );
