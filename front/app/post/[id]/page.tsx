@@ -1,13 +1,8 @@
-import TweetCard from "@/components/Tweets/TweetCard";
 import React from "react";
+import ClientPage from "./ClientPage";
 
-const PostPage = () => {
-  return (
-    <>
-      <TweetCard />
-      <TweetCard />
-    </>
-  );
+const PostPage = ({ params }: { params: { id: string } }) => {
+  return <ClientPage params={params} />;
 };
 
 export default PostPage;
