@@ -14,12 +14,6 @@ import { useRouter } from "next/navigation";
 
 function NavigationBox() {
   const router = useRouter();
-  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-
-  const toggleDrawer = () => {
-    setIsOpenDrawer((pre) => !pre);
-  };
-
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <ListItem>
