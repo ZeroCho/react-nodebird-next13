@@ -2,6 +2,7 @@
 
 import { loadUserPostsAPI } from "@/apis/user";
 import TweetCardList from "@/components/Tweets/TweetCardList";
+import UserProfile from "@/components/Users/UserProfile";
 import Tweet from "@/typings/tweet";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
@@ -27,7 +28,12 @@ const ClientPage: FC<ClientPageProps> = ({ params }) => {
     }
   );
   if (!data) return <></>;
-  return <TweetCardList data={data} />;
+  return (
+    <>
+      <UserProfile />
+      <TweetCardList data={data} />
+    </>
+  );
 };
 
 export default ClientPage;
