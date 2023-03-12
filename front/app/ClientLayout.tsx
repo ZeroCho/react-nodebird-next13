@@ -4,7 +4,7 @@ import { loadMyInfoAPI } from "@/apis/auth";
 import NavigationBox from "@/components/Layouts/NavigationBox";
 import SearchInput from "@/components/Layouts/SearchInput";
 import SignInForm from "@/components/Auth/SignInForm";
-import UserProfile from "@/components/Users/UserProfile";
+import MyProfile from "@/components/Users/MyProfile";
 import { RootState } from "@/store/store";
 import User from "@/typings/user";
 import { colors, Container, Grid, Link } from "@mui/material";
@@ -47,7 +47,7 @@ export default function ClientLayout({
           justifyContent="center"
           sx={{ padding: "0.8rem" }}
         >
-          {me ? <UserProfile /> : <SignInForm />}
+          {me ? <MyProfile /> : <SignInForm />}
 
           <Link href="https://www.zerocho.com/" color={colors.blue[700]}>
             Made by ZeroCho

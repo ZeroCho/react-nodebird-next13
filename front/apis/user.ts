@@ -31,3 +31,7 @@ export function loadUserPostsAPI(data: number, lastId?: number) {
     .get(`/user/${data}/posts?lastId=${lastId || 0}`)
     .then((response) => response.data);
 }
+
+export function loadUserAPI(data: number) {
+  return api.get(`/user/${data}`).then((response) => response.data);
+}
