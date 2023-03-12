@@ -10,6 +10,10 @@ export function loadPostsAPI(lastId?: number) {
     .then((response) => response.data);
 }
 
+export function loadPostAPI(data: number) {
+  return api.get(`/post/${data}`).then((response) => response.data);
+}
+
 export function removePostAPI(data: number) {
   return api.delete(`/post/${data}`).then((response) => response.data);
 }
