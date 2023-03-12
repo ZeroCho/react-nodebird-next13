@@ -1,6 +1,6 @@
 "use client";
 
-import { signInAPI } from "@/apis/signin";
+import { signInAPI } from "@/apis/auth";
 import useInput from "@/hooks/useInput";
 import { setUserInfo } from "@/reducers/slice";
 import { Box, Button, colors, Grid, TextField } from "@mui/material";

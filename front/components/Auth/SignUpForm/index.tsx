@@ -1,6 +1,6 @@
 "use client";
 
-import { signUpAPI } from "@/apis/signup";
+import { signUpAPI } from "@/apis/auth";
 import useInput from "@/hooks/useInput";
 import {
   Button,
