@@ -3,16 +3,13 @@ import RepeatIcon from "@mui/icons-material/Repeat";
 import ChatIcon from "@mui/icons-material/Chat";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import React, { Dispatch, FC, SetStateAction, useCallback } from "react";
-import {
-  InfiniteData,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { loadMyInfoAPI } from "@/apis/auth";
 import User from "@/typings/user";
 import { likePostAPI, retweetAPI, unlikePostAPI } from "@/apis/tweet";
 import Tweet from "@/typings/tweet";
+import useUnLikeTweetMutation from "@/hooks/mutations/useUnLikeTweetMutation";
+import useLikeTweetMutation from "@/hooks/mutations/useLikeTweetMutation";
 
 interface Props {
   setIsCommentOpen: Dispatch<SetStateAction<boolean>>;
@@ -42,49 +39,10 @@ const TweetCardActions: FC<Props> = ({
   const handleReTweet = useCallback(() => {
     reTweetMutation(postId);
   }, []);
-  const { mutate: likeMutate } = useMutation(["post", postId], likePostAPI, {
-    onSuccess: () => {
-      if (me) {
-        queryClient.setQueryData<InfiniteData<Tweet[]>>(["tweets"], (res) => {
-          const found = res?.pages.flat().find((v) => v.id === postId);
-          if (found) {
-            found.Likers.push({ id: me.id });
-          }
-          return {
-            pageParams: res?.pageParams || [],
-            pages: res?.pages || [],
-          };
-        });
-      }
-    },
-    onSettled() {
-      queryClient.refetchQueries(["tweets"]);
-    },
-  });
 
-  const { mutate: unlikeMutate } = useMutation(
-    ["post", postId],
-    unlikePostAPI,
-    {
-      onMutate() {
-        if (!me) return;
-        queryClient.setQueryData<InfiniteData<Tweet[]>>(["tweets"], (res) => {
-          const found = res?.pages.flat().find((v) => v.id === postId);
-          if (found) {
-            const index = found.Likers.findIndex((v) => v.id === me.id);
-            found.Likers.splice(index, 1);
-          }
-          return {
-            pageParams: res?.pageParams || [],
-            pages: res?.pages || [],
-          };
-        });
-      },
-      onSettled() {
-        queryClient.refetchQueries(["tweets"]);
-      },
-    }
-  );
+  const { mutate: likeMutate } = useLikeTweetMutation(postId);
+
+  const { mutate: unlikeMutate } = useUnLikeTweetMutation(postId);
 
   return (
     <CardActions disableSpacing>
