@@ -2,8 +2,8 @@
 
 import { Box, colors, Grid, Typography } from "@mui/material";
 import React from "react";
-import EditUserProfile from "@/components/User/EditUserProfile";
-import FollowList from "@/components/User/FollowList";
+import EditUserProfile from "@/components/Users/EditUserProfile";
+import FollowList from "@/components/Users/FollowList";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import User from "@/typings/user";
 import { loadMyInfoAPI } from "@/apis/auth";

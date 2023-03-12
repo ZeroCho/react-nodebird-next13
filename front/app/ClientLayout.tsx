@@ -4,7 +4,7 @@ import { loadMyInfoAPI } from "@/apis/auth";
 import NavigationBox from "@/components/Layouts/NavigationBox";
 import SearchInput from "@/components/Layouts/SearchInput";
 import SignInForm from "@/components/Auth/SignInForm";
-import UserProfile from "@/components/User/UserProfile";
+import UserProfile from "@/components/Users/UserProfile";
 import { RootState } from "@/store/store";
 import User from "@/typings/user";
 import { colors, Container, Grid, Link } from "@mui/material";
