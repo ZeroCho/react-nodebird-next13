@@ -1,7 +1,7 @@
 import { use } from "react";
 import { cookies, headers } from "next/headers";
-import Providers from "./(default)/providers";
-import ClientLayout from "./(default)/ClientLayout";
+import Providers from "./providers";
+import ClientLayout from "./ClientLayout";
 import { setUserInfo } from "@/reducers/slice";
 import { useDispatch } from "react-redux";
 
