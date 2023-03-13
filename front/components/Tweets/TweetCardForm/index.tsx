@@ -4,11 +4,12 @@ import { addPostAPI, uploadImagesAPI } from "@/apis/tweet";
 import useInput from "@/hooks/useInput";
 import { Textarea } from "@mui/joy";
 import FormControl from "@mui/joy/FormControl";
-import { Button, Grid } from "@mui/material";
+import { Badge, Button, Grid, IconButton } from "@mui/material";
 import List from "@mui/material/List/List";
 import ListItem from "@mui/material/ListItem/ListItem";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import CloseIcon from "@mui/icons-material/Close";
 import React, {
   ChangeEvent,
   ChangeEventHandler,
@@ -75,12 +76,22 @@ const TweetCardForm = () => {
           <Grid container spacing={2}>
             {imagePaths.map((v, i) => (
               <Grid item md={4} key={v}>
-                <Image
-                  src={`http://localhost:3065/${v}`}
-                  alt="image"
-                  width={200}
-                  height={200}
-                />
+                <Badge
+                  color="secondary"
+                  badgeContent={
+                    <IconButton onClick={onRemoveImage(i)}>
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                  }
+                  sx={{ borderRadius: "50%" }}
+                >
+                  <Image
+                    src={`http://localhost:3065/${v}`}
+                    alt="image"
+                    width={200}
+                    height={200}
+                  />
+                </Badge>
               </Grid>
             ))}
           </Grid>
