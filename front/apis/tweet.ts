@@ -45,3 +45,7 @@ export function likePostAPI(data: number) {
 export function unlikePostAPI(data: number) {
   return api.delete(`/post/${data}/like`).then((response) => response.data);
 }
+
+export function uploadImagesAPI<T>(data: FormData) {
+  return api.post<T>("/post/images", data).then((response) => response.data);
+}
