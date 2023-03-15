@@ -55,7 +55,7 @@ export const ReTweetCard: FC<ReTweetProps> = ({ data, retweet }) => {
           postId={data.id}
           createdAt={retweet.createdAt}
         />
-        <TweetCardContent content={retweet.content} images={data.Images} />
+        <TweetCardContent content={retweet.content} images={retweet.Images} />
       </ReTweetCardLayout>
       <TweetCardActions
         setIsCommentOpen={setIsCommentOpen}
