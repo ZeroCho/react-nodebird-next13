@@ -24,7 +24,7 @@ export const TweetCard: FC<TweetProps> = ({ data }) => {
         postId={data.id}
         createdAt={data.createdAt}
       />
-      <TweetCardContent content={data.content} />
+      <TweetCardContent content={data.content} images={data.Images} />
       <TweetCardActions
         setIsCommentOpen={setIsCommentOpen}
         likers={data.Likers}
@@ -55,7 +55,7 @@ export const ReTweetCard: FC<ReTweetProps> = ({ data, retweet }) => {
           postId={data.id}
           createdAt={retweet.createdAt}
         />
-        <TweetCardContent content={retweet.content} />
+        <TweetCardContent content={retweet.content} images={retweet.Images} />
       </ReTweetCardLayout>
       <TweetCardActions
         setIsCommentOpen={setIsCommentOpen}
