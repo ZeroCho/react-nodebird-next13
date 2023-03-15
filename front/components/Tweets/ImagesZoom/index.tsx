@@ -1,6 +1,6 @@
 import { Box, Button, Card, Modal } from "@mui/material";
 import Image from "next/image";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import Carousel from "react-material-ui-carousel";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
@@ -23,12 +23,11 @@ interface Props {
 }
 
 const ImagesZoom: FC<Props> = ({ images, onClose, open }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  console.log(images);
   return (
     <Modal open={open} onClose={onClose}>
       <>
         <Box
+          component="header"
           sx={{
             backgroundColor: "white",
             width: "100%",

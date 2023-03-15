@@ -33,6 +33,7 @@ const TweetCardContent: FC<Props> = ({ content, images }) => {
                 height="300"
                 alt="post image"
                 key={images[0].src}
+                style={{ cursor: "pointer" }}
                 onClick={onZoom}
               />
             </Grid>
@@ -45,6 +46,8 @@ const TweetCardContent: FC<Props> = ({ content, images }) => {
                 height="300"
                 alt="post image"
                 key={images[1].src}
+                style={{ cursor: "pointer" }}
+                onClick={onZoom}
               />
             </Grid>
           )}
@@ -59,7 +62,9 @@ const TweetCardContent: FC<Props> = ({ content, images }) => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  cursor: "pointer",
                 }}
+                onClick={onZoom}
               >
                 + {images.length - 1} 더보기
               </Paper>
