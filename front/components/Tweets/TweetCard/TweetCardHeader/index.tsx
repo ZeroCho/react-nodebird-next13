@@ -17,6 +17,7 @@ import { removePostAPI } from "@/apis/tweet";
 import User from "@/typings/user";
 import { loadMyInfoAPI } from "@/apis/auth";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
 interface Props {
   user: Partial<User> & { id: number };
@@ -26,6 +27,7 @@ interface Props {
 
 const TweetCardHeader: FC<Props> = ({ user, postId, createdAt }) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const { data: me } = useQuery<User>(["user"], loadMyInfoAPI);
   const isFollowing = me?.Followings?.find((v) => v.id === user.id);
@@ -48,7 +50,11 @@ const TweetCardHeader: FC<Props> = ({ user, postId, createdAt }) => {
   return (
     <CardHeader
       avatar={
-        <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+        <Avatar
+          sx={{ bgcolor: "red", cursor: "pointer" }}
+          aria-label="recipe"
+          onClick={() => router.push(`user/${user.id}`)}
+        >
           {user.nickname && user.nickname[0]}
         </Avatar>
       }
