@@ -12,6 +12,7 @@ const ClientPage = () => {
     data,
     isLoading: loadPostsLoading,
     fetchNextPage,
+    hasNextPage,
   } = useInfiniteQuery<Tweet[]>(
     ["tweets"],
     ({ pageParam = "" }) => loadPostsAPI(pageParam),
@@ -24,8 +25,12 @@ const ClientPage = () => {
   if (!data) return <></>;
   return (
     <>
-      <TweetCardList data={data}></TweetCardList>
       <TweetCardForm />
+      <TweetCardList
+        data={data}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+      />
     </>
   );
 };
