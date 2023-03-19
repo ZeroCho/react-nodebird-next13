@@ -16,8 +16,9 @@ const ClientPage: FC<ClientPageProps> = ({ params }) => {
   const id = params.id;
   const {
     data,
-    isLoading: loadPostsLoading,
+    isFetching: loadPostsLoading,
     fetchNextPage,
+    hasNextPage,
   } = useInfiniteQuery<Tweet[]>(
     ["user", id, "posts"],
     ({ pageParam = "" }) => loadUserPostsAPI(Number(id), pageParam),
@@ -34,7 +35,12 @@ const ClientPage: FC<ClientPageProps> = ({ params }) => {
   return (
     <>
       <UserProfile userInfo={userInfo} />
-      <TweetCardList data={data} />
+      <TweetCardList
+        data={data}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isLoading={loadPostsLoading}
+      />
     </>
   );
 };

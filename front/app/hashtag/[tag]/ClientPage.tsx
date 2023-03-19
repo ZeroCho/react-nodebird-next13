@@ -14,8 +14,9 @@ const ClientPage: FC<Props> = ({ params }) => {
   const tag = params.tag;
   const {
     data,
-    isLoading: loadPostsLoading,
+    isFetching: loadPostsLoading,
     fetchNextPage,
+    hasNextPage,
   } = useInfiniteQuery<Tweet[]>(
     ["hashtag", tag],
     ({ pageParam = "" }) => loadHashtagPostsAPI(tag, pageParam),
@@ -26,7 +27,14 @@ const ClientPage: FC<Props> = ({ params }) => {
     }
   );
   if (!data) return <></>;
-  return <TweetCardList data={data} />;
+  return (
+    <TweetCardList
+      data={data}
+      fetchNextPage={fetchNextPage}
+      hasNextPage={hasNextPage}
+      isLoading={loadPostsLoading}
+    />
+  );
 };
 
 export default ClientPage;
