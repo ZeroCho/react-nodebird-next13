@@ -16,7 +16,7 @@ const ClientPage: FC<ClientPageProps> = ({ params }) => {
   const id = params.id;
   const {
     data,
-    isLoading: loadPostsLoading,
+    isFetching: loadPostsLoading,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<Tweet[]>(
@@ -39,6 +39,7 @@ const ClientPage: FC<ClientPageProps> = ({ params }) => {
         data={data}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage}
+        isLoading={loadPostsLoading}
       />
     </>
   );

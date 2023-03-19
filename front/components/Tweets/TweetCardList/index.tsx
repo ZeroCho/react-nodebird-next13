@@ -6,16 +6,23 @@ import React, { FC, useEffect } from "react";
 import { loadPostsAPI } from "@/apis/tweet";
 import { ReTweetCard, TweetCard } from "@/components/Tweets/TweetCard";
 import { useInView } from "react-intersection-observer";
+import { CircularProgress } from "@mui/material";
 
 interface Prop {
   data: InfiniteData<Tweet[]>;
   fetchNextPage: () => void;
   hasNextPage: boolean | undefined;
+  isLoading: boolean;
 }
 
-const TweetCardList: FC<Prop> = ({ data, fetchNextPage, hasNextPage }) => {
+const TweetCardList: FC<Prop> = ({
+  data,
+  fetchNextPage,
+  hasNextPage,
+  isLoading,
+}) => {
   const [ref, inView] = useInView();
-
+  console.log(isLoading);
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
@@ -39,7 +46,12 @@ const TweetCardList: FC<Prop> = ({ data, fetchNextPage, hasNextPage }) => {
           )
         )
       )}
-      <div ref={hasNextPage ? ref : undefined} style={{ height: 50 }}></div>
+      <div
+        ref={!isLoading && hasNextPage ? ref : undefined}
+        style={{ height: 50, display: "flex", justifyContent: "center" }}
+      >
+        {isLoading && <CircularProgress disableShrink />}
+      </div>
     </>
   ) : (
     <></>

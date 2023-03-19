@@ -10,7 +10,7 @@ import React from "react";
 const ClientPage = () => {
   const {
     data,
-    isLoading: loadPostsLoading,
+    isFetching: loadPostsLoading,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<Tweet[]>(
@@ -30,6 +30,7 @@ const ClientPage = () => {
         data={data}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage}
+        isLoading={loadPostsLoading}
       />
     </>
   );
