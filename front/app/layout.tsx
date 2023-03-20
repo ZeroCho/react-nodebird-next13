@@ -1,4 +1,4 @@
-import Providers from "./providers";
+import Providers from "./providers.client";
 import ClientLayout from "./layout.client";
 import { loadMyInfoAPI } from "@/apis/auth";
 import { QueryClient, dehydrate } from "@tanstack/query-core";
