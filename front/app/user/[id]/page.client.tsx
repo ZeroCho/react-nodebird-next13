@@ -10,9 +10,10 @@ import React, { FC } from "react";
 
 interface ClientPageProps {
   params: { id: string };
+  initialUserInfo: any;
 }
 
-const ClientPage: FC<ClientPageProps> = ({ params }) => {
+const ClientPage: FC<ClientPageProps> = ({ params, initialUserInfo }) => {
   const id = params.id;
   const {
     data,
@@ -28,8 +29,13 @@ const ClientPage: FC<ClientPageProps> = ({ params }) => {
       },
     }
   );
-  const { data: userInfo } = useQuery(["user", id], () =>
-    loadUserAPI(Number(id))
+  const { data: userInfo } = useQuery(
+    ["user", id],
+    () => loadUserAPI(Number(id)),
+    {
+      initialData: initialUserInfo,
+      enabled: false,
+    }
   );
   if (!data || !userInfo) return <></>;
   return (
