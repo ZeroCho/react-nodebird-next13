@@ -4,10 +4,11 @@ import { loadPostsAPI } from "@/apis/tweet";
 import TweetCardForm from "@/components/Tweets/TweetCardForm";
 import TweetCardList from "@/components/Tweets/TweetCardList";
 import Tweet from "@/typings/tweet";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 
 const ClientPage = () => {
+  const queryClient = useQueryClient();
   const {
     data,
     isFetching: loadPostsLoading,

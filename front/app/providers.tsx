@@ -1,15 +1,23 @@
 "use client";
 
+import { loadMyInfoAPI } from "@/apis/auth";
 import { store } from "@/store/store";
-import User from "@/typings/user";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React, { ReactNode } from "react";
+import React, { FC, PropsWithChildren, ReactNode } from "react";
 import { Provider } from "react-redux";
 
-const Providers = ({ me, children }: { me: User; children: ReactNode }) => {
-  const queryClient = new QueryClient();
+interface Props {
+  children: ReactNode;
+}
+
+const Providers: FC<Props> = ({ children }) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { refetchOnWindowFocus: false },
+    },
+  });
   return (
-    <Provider store={store(me)}>
+    <Provider store={store()}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </Provider>
   );

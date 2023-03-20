@@ -1,7 +1,8 @@
+import { AxiosRequestConfig } from "axios";
 import { api } from "./axios";
 
-export function loadMyInfoAPI() {
-  return api.get("/user").then((response) => response.data);
+export function loadMyInfoAPI(options?: AxiosRequestConfig) {
+  return api.get("/user", options).then((response) => response.data);
 }
 
 export function logOutAPI() {
