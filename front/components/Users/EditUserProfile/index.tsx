@@ -1,8 +1,11 @@
 "use client";
 
+import { loadMyInfoAPI } from "@/apis/auth";
 import { changeNicknameAPI } from "@/apis/user";
+import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 import useInput from "@/hooks/useInput";
 import { RootState } from "@/store/store";
+import User from "@/typings/user";
 import {
   Button,
   FormControl,
@@ -10,12 +13,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { FormEvent, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 const EditUserProfile = () => {
-  const me = useSelector((state: RootState) => state.global.userInfo);
+  const { data: me } = useMyInfoQuery();
   const [editNickname, handleEditNickname, setEditNickname] =
     useInput<string>("");
 

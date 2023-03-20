@@ -20,6 +20,7 @@ import { loadMyInfoAPI } from "@/apis/auth";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import ReportModal from "../../ReportModal";
+import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 
 interface Props {
   user: Partial<User> & { id: number };
@@ -34,7 +35,7 @@ const TweetCardHeader: FC<Props> = ({ user, postId, createdAt }) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
 
-  const { data: me } = useQuery<User>(["user"], loadMyInfoAPI);
+  const { data: me } = useMyInfoQuery();
   const isFollowing = me?.Followings?.find((v) => v.id === user.id);
 
   const { mutate: removePostMutate } = useMutation(

@@ -16,17 +16,17 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box } from "@mui/system";
-import { useMutation } from "@tanstack/react-query";
-import { logOutAPI } from "@/apis/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserInfo } from "@/reducers/slice";
-import { RootState } from "@/store/store";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { loadMyInfoAPI, logOutAPI } from "@/apis/auth";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import User from "@/typings/user";
+import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const me = useSelector((state: RootState) => state.global.userInfo);
+  const { data: me } = useMyInfoQuery();
   const { mutate } = useMutation(logOutAPI, {
     onError: (error: any) => {
       alert(error.response?.data);
@@ -35,8 +35,7 @@ const MyProfile = () => {
 
   const handleLogOut = useCallback(() => {
     mutate();
-    dispatch(setUserInfo(undefined));
-  }, [dispatch, mutate]);
+  }, [mutate]);
 
   const handleProfile = useCallback(() => {
     router.push("/profile");

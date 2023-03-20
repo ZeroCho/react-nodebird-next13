@@ -1,11 +1,13 @@
+import { loadMyInfoAPI } from "@/apis/auth";
 import { addCommentAPI } from "@/apis/tweet";
+import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 import useInput from "@/hooks/useInput";
 import { RootState } from "@/store/store";
+import User from "@/typings/user";
 import { Textarea } from "@mui/joy";
 import { Button, FormControl, List, ListItem } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { FC, FormEvent, useCallback } from "react";
-import { useSelector } from "react-redux";
 
 interface Props {
   postId: number;
@@ -13,7 +15,7 @@ interface Props {
 
 const TweetCommentForm: FC<Props> = ({ postId }) => {
   const queryClient = useQueryClient();
-  const me = useSelector((state: RootState) => state.global.userInfo);
+  const { data: me } = useMyInfoQuery();
   const [comment, handleComment, setComment] = useInput("");
 
   const { mutate } = useMutation(addCommentAPI, {
