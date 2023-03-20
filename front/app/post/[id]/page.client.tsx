@@ -7,12 +7,18 @@ import { useQuery } from "@tanstack/react-query";
 import React, { FC } from "react";
 interface ClientPageProps {
   params: { id: string };
+  initialTweet: Tweet;
 }
 
-const ClientPage: FC<ClientPageProps> = ({ params }) => {
+const ClientPage: FC<ClientPageProps> = ({ params, initialTweet }) => {
   const id = params.id;
-  const { data: tweet } = useQuery<Tweet>(["post", id], () =>
-    loadPostAPI(Number(id))
+  const { data: tweet } = useQuery<Tweet>(
+    ["post", id],
+    () => loadPostAPI(Number(id)),
+    {
+      initialData: initialTweet,
+      enabled: false,
+    }
   );
 
   if (!tweet) return <></>;
