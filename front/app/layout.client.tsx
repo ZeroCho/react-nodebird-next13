@@ -1,21 +1,18 @@
 "use client";
 
-import { loadMyInfoAPI } from "@/apis/auth";
 import NavigationBox from "@/components/Layouts/NavigationBox";
 import SearchInput from "@/components/Layouts/SearchInput";
 import SignInForm from "@/components/Auth/SignInForm";
 import MyProfile from "@/components/Users/MyProfile";
-import { RootState } from "@/store/store";
-import User from "@/typings/user";
 import { colors, Container, Grid, Link } from "@mui/material";
-import { useSelector } from "react-redux";
+import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 
 export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const me = useSelector((state: RootState) => state.global.userInfo);
+  const { data: me } = useMyInfoQuery();
   return (
     <Container maxWidth="xl">
       <Grid container>

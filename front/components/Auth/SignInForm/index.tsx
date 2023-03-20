@@ -19,9 +19,7 @@ function SignInForm() {
     onError: (error: any) => {
       alert(error.response?.data);
     },
-    onSuccess: (data) => {
-      dispatch(setUserInfo(data));
-    },
+    onSuccess: () => {},
   });
 
   const handleForm = useCallback(() => {

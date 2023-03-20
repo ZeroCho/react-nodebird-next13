@@ -1,7 +1,7 @@
 import { globalSlice } from "@/reducers/slice";
 import { configureStore } from "@reduxjs/toolkit";
 
-export const store = (userInfo: any) => {
+export const store = (userInfo?: any) => {
   console.log(userInfo);
   return configureStore({
     reducer: {

@@ -10,6 +10,7 @@ import { likePostAPI, retweetAPI, unlikePostAPI } from "@/apis/tweet";
 import Tweet from "@/typings/tweet";
 import useUnLikeTweetMutation from "@/hooks/mutations/useUnLikeTweetMutation";
 import useLikeTweetMutation from "@/hooks/mutations/useLikeTweetMutation";
+import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 
 interface Props {
   setIsCommentOpen: Dispatch<SetStateAction<boolean>>;
@@ -22,7 +23,7 @@ const TweetCardActions: FC<Props> = ({
   postId,
   likers = [],
 }) => {
-  const { data: me } = useQuery<User>(["user"], loadMyInfoAPI);
+  const { data: me } = useMyInfoQuery();
   const isLiked = likers.find((v) => me?.id && v.id === me.id);
   const queryClient = useQueryClient();
 

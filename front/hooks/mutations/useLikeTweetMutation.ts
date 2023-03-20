@@ -8,10 +8,11 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import useMyInfoQuery from "../queries/useMyInfoQuery";
 
 const useLikeTweetMutation = (postId: number) => {
   const queryClient = useQueryClient();
-  const { data: me } = useQuery<User>(["user"], loadMyInfoAPI);
+  const { data: me } = useMyInfoQuery();
 
   return useMutation(["post", postId], likePostAPI, {
     onSuccess: () => {
