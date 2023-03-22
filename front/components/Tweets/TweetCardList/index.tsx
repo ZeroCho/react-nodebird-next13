@@ -33,13 +33,7 @@ const TweetCardList: FC<Prop> = ({
       {data.pages.map((page) =>
         page.map((tweet) =>
           tweet.Retweet && tweet.RetweetId ? (
-            <>
-              <ReTweetCard
-                retweet={tweet.Retweet}
-                data={tweet}
-                key={tweet.id}
-              />
-            </>
+            <ReTweetCard retweet={tweet.Retweet} data={tweet} key={tweet.id} />
           ) : (
             <TweetCard data={tweet} key={tweet.id} />
           )

@@ -13,7 +13,7 @@ interface ClientPageProps {
 const ClientPage: FC<ClientPageProps> = ({ params, initialTweet }) => {
   const id = params.id;
   const { data: tweet } = useQuery<Tweet>(
-    ["post", id],
+    ["tweet", id],
     () => loadPostAPI(Number(id)),
     {
       initialData: initialTweet,
