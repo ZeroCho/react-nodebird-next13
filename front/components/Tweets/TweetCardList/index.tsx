@@ -22,7 +22,6 @@ const TweetCardList: FC<Prop> = ({
   isLoading,
 }) => {
   const [ref, inView] = useInView();
-  console.log(isLoading);
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
