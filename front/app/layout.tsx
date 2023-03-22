@@ -24,7 +24,7 @@ export default async function RootLayout({
     loadMyInfoAPI({ headers: cookie ? { cookie } : undefined })
   );
   const dehydratedState = dehydrate(queryClient);
-
+  queryClient.clear();
   return (
     <html lang="en">
       <body>
