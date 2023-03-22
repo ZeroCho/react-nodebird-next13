@@ -1,11 +1,8 @@
 "use client";
 
-import { loadMyInfoAPI } from "@/apis/auth";
 import { changeNicknameAPI } from "@/apis/user";
 import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 import useInput from "@/hooks/useInput";
-import { RootState } from "@/store/store";
-import User from "@/typings/user";
 import {
   Button,
   FormControl,
@@ -13,15 +10,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { FormEvent, useEffect } from "react";
 
 const EditUserProfile = () => {
+  const queryClient = useQueryClient();
   const { data: me } = useMyInfoQuery();
   const [editNickname, handleEditNickname, setEditNickname] =
     useInput<string>("");
-
-  const { mutate } = useMutation(changeNicknameAPI);
+  const { mutate } = useMutation(changeNicknameAPI, {
+    onSuccess: () => {
+      queryClient.refetchQueries(["user"]);
+      alert("변경이 완료되었습니다");
+    },
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +32,6 @@ const EditUserProfile = () => {
     }
 
     mutate(editNickname);
-    alert("변경이 완료되었습니다");
   };
 
   useEffect(() => {

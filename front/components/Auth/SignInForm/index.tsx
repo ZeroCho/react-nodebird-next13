@@ -15,13 +15,12 @@ function SignInForm() {
   const router = useRouter();
   const [email, handleEmail] = useInput("");
   const [password, handlePassword] = useInput("");
-  const { refetch } = useMyInfoQuery();
   const { mutate } = useMutation(signInAPI, {
     onError: (error: any) => {
       alert(error.response?.data);
     },
     onSuccess: async () => {
-      refetch();
+      queryClient.refetchQueries(["user"]);
     },
   });
 

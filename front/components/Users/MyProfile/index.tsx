@@ -27,13 +27,13 @@ const MyProfile = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { data: me, refetch } = useMyInfoQuery();
+  const { data: me } = useMyInfoQuery();
   const { mutate } = useMutation(logOutAPI, {
     onError: (error: any) => {
       alert(error.response?.data);
     },
     onSuccess: () => {
-      refetch();
+      queryClient.refetchQueries(["user"]);
     },
   });
 
