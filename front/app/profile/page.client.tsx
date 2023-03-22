@@ -9,6 +9,8 @@ import User from "@/typings/user";
 import { loadMyInfoAPI } from "@/apis/auth";
 import { loadFollowersAPI, loadFollowingsAPI } from "@/apis/user";
 import { AxiosError } from "axios";
+import useUnFollowMutation from "@/hooks/mutations/useUnFollowMutation";
+import useUnFollowerMutation from "@/hooks/mutations/useUnFollowerMutation";
 
 const ProfilePage = () => {
   const {
@@ -43,6 +45,10 @@ const ProfilePage = () => {
       },
     }
   );
+
+  const { mutate: unFollowMutate } = useUnFollowMutation();
+  const { mutate: unFollowerMutate } = useUnFollowerMutation();
+
   return (
     <>
       <Box
@@ -73,6 +79,7 @@ const ProfilePage = () => {
                 data={followings}
                 fetchNextPage={fetchNextFollowings}
                 hasNextPage={hasNextFollowings}
+                unFollowMutate={unFollowMutate}
               />
             )}
           </Box>
@@ -94,6 +101,7 @@ const ProfilePage = () => {
                 data={followers}
                 fetchNextPage={fetchNextFollowers}
                 hasNextPage={hasNextFollowers}
+                unFollowMutate={unFollowerMutate}
               />
             )}
           </Box>
