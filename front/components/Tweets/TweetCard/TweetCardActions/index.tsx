@@ -12,6 +12,7 @@ import useUnLikeTweetMutation from "@/hooks/mutations/useUnLikeTweetMutation";
 import useLikeTweetMutation from "@/hooks/mutations/useLikeTweetMutation";
 import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 import { usePathname } from "next/navigation";
+import { AxiosError } from "axios";
 
 interface Props {
   setIsCommentOpen: Dispatch<SetStateAction<boolean>>;
@@ -29,8 +30,11 @@ const TweetCardActions: FC<Props> = ({
   const queryClient = useQueryClient();
 
   const { mutate: reTweetMutation } = useMutation(retweetAPI, {
-    onSettled: (data) => {
-      queryClient.invalidateQueries(["tweets"]);
+    onError: (e: AxiosError) => {
+      alert(e.response?.data);
+    },
+    onSuccess: (data) => {
+      queryClient.refetchQueries(["tweets"]);
     },
   });
 

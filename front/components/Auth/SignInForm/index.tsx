@@ -27,7 +27,7 @@ function SignInForm() {
   const handleForm = useCallback(() => {
     mutate({ email, password });
   }, [email, mutate, password]);
-  console.log(queryClient);
+
   return (
     <Box
       component="form"
