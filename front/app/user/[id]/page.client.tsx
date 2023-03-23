@@ -4,7 +4,11 @@ import { loadUserAPI, loadUserPostsAPI } from "@/apis/user";
 import TweetCardList from "@/components/Tweets/TweetCardList";
 import UserProfile from "@/components/Users/UserProfile";
 import Tweet from "@/typings/tweet";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import React, { FC } from "react";
 
@@ -21,7 +25,7 @@ const ClientPage: FC<ClientPageProps> = ({ params, initialUserInfo }) => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<Tweet[]>(
-    ["user", id, "posts"],
+    ["tweets", "user", id],
     ({ pageParam = "" }) => loadUserPostsAPI(Number(id), pageParam),
     {
       getNextPageParam: (lastPage) => {

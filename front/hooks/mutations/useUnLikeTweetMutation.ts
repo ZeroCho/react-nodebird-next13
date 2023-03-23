@@ -14,7 +14,7 @@ const useUnLikeTweetMutation = (postId: number) => {
   const queryClient = useQueryClient();
   const { data: me } = useMyInfoQuery();
 
-  return useMutation(["post", postId], unlikePostAPI, {
+  return useMutation(["tweet", postId], unlikePostAPI, {
     onMutate() {
       if (!me) return;
       queryClient.setQueryData<InfiniteData<Tweet[]>>(["tweets"], (res) => {
@@ -30,7 +30,9 @@ const useUnLikeTweetMutation = (postId: number) => {
       });
     },
     onSettled() {
-      queryClient.refetchQueries(["tweets"]);
+      queryClient
+        .getQueriesData(["tweets"])
+        .forEach((query) => queryClient.invalidateQueries(query[0]));
     },
   });
 };

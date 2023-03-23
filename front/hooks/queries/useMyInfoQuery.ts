@@ -5,7 +5,8 @@ import React from "react";
 
 const useMyInfoQuery = () => {
   return useQuery<User>(["user"], loadMyInfoAPI, {
-    enabled: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 };
 

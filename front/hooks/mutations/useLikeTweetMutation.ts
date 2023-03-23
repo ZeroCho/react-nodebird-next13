@@ -14,7 +14,7 @@ const useLikeTweetMutation = (postId: number) => {
   const queryClient = useQueryClient();
   const { data: me } = useMyInfoQuery();
 
-  return useMutation(["post", postId], likePostAPI, {
+  return useMutation(["tweet", postId], likePostAPI, {
     onSuccess: () => {
       if (me) {
         queryClient.setQueryData<InfiniteData<Tweet[]>>(["tweets"], (res) => {
@@ -30,7 +30,9 @@ const useLikeTweetMutation = (postId: number) => {
       }
     },
     onSettled() {
-      queryClient.refetchQueries(["tweets"]);
+      queryClient
+        .getQueriesData(["tweets"])
+        .forEach((query) => queryClient.invalidateQueries(query[0]));
     },
   });
 };

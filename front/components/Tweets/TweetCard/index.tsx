@@ -10,6 +10,9 @@ import TweetCardLayout from "./TweetCardLayout";
 import ReTweetCardLayout from "./ReTweetCardLayout";
 import { Avatar, CardHeader } from "@mui/material";
 import { useRouter } from "next/navigation";
+import UserAvatar from "./UserAvatar";
+import HeaderAction from "./HeaderAction";
+import ReTweetCardHeader from "./ReTweetCardHeader";
 
 interface TweetProps {
   data: Tweet;
@@ -41,29 +44,16 @@ interface ReTweetProps extends TweetProps {
 }
 
 export const ReTweetCard: FC<ReTweetProps> = ({ data, retweet }) => {
-  const router = useRouter();
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   return (
     <TweetCardLayout>
-      {data.User.nickname && (
-        <CardHeader
-          title={`"${data.User.nickname}" 님이 리트윗 하셨습니다.`}
-          avatar={
-            <Avatar
-              sx={{ cursor: "pointer" }}
-              aria-label="recipe"
-              onClick={() => router.push(`/user/${data.User.id}`)}
-            >
-              {data.User.nickname[0]}
-            </Avatar>
-          }
-        />
-      )}
+      <ReTweetCardHeader data={data} />
       <ReTweetCardLayout>
         <TweetCardHeader
           user={retweet.User}
           postId={data.id}
           createdAt={retweet.createdAt}
+          disableAction
         />
         <TweetCardContent content={retweet.content} images={retweet.Images} />
       </ReTweetCardLayout>

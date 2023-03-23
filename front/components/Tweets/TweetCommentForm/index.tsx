@@ -31,7 +31,6 @@ const TweetCommentForm: FC<Props> = ({ postId }) => {
       if (!comment.trim()) {
         return alert("댓글을 작성하세요.");
       }
-      console.log(comment);
       me && mutate({ userId: me.id, content: comment, postId: postId });
     },
     [comment, me, mutate, postId]

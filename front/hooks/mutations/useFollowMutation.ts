@@ -6,7 +6,7 @@ const useFollowMutation = () => {
   const mutation = useMutation(followAPI, {
     onSuccess: () => {
       queryClient.refetchQueries(["user"]);
-      queryClient.refetchQueries(["followers"]);
+      queryClient.refetchQueries(["followings"]);
     },
     onError: () => {
       alert("팔로우에 실패하였습니다");

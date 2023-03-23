@@ -14,6 +14,10 @@ export function unfollowAPI(data: number) {
   return api.delete(`/user/${data}/follow`).then((response) => response.data);
 }
 
+export function removeFollowerAPI(data: number) {
+  return api.delete(`/user/follower/${data}`).then((response) => response.data);
+}
+
 export function loadFollowingsAPI(page: number) {
   return api
     .get(`/user/followings?limit=${page}`)

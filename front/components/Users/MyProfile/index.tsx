@@ -16,7 +16,7 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box } from "@mui/system";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { loadMyInfoAPI, logOutAPI } from "@/apis/auth";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -25,11 +25,15 @@ import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { data: me } = useMyInfoQuery();
   const { mutate } = useMutation(logOutAPI, {
     onError: (error: any) => {
       alert(error.response?.data);
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries(["user"]);
     },
   });
 

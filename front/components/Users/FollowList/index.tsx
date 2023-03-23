@@ -11,18 +11,24 @@ import FolderIcon from "@mui/icons-material/Folder";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { FC, useState } from "react";
 import User from "@/typings/user";
-import { InfiniteData } from "@tanstack/react-query";
+import { InfiniteData, UseMutateFunction } from "@tanstack/react-query";
 import useFollowMutation from "@/hooks/mutations/useFollowMutation";
 import useUnFollowMutation from "@/hooks/mutations/useUnFollowMutation";
+import useUnFollowerMutation from "@/hooks/mutations/useUnFollowerMutation";
 
 interface Prop {
   data: InfiniteData<User[]>;
   fetchNextPage: () => void;
   hasNextPage: boolean | undefined;
+  unFollowMutate: UseMutateFunction<any, unknown, number, unknown>;
 }
 
-const FollowList: FC<Prop> = ({ data, fetchNextPage, hasNextPage }) => {
-  const { mutate: unFollowMutate } = useUnFollowMutation();
+const FollowList: FC<Prop> = ({
+  data,
+  fetchNextPage,
+  hasNextPage,
+  unFollowMutate,
+}) => {
   return (
     <>
       {data.pages.map((page) =>
