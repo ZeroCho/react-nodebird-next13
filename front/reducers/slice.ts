@@ -3,27 +3,37 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import User from "@/typings/user";
 
 export interface GlobalState {
-  userInfo: User | undefined;
+  snackBar: {
+    message: string;
+    isOpen: boolean;
+  };
 }
 
 const initialState: GlobalState = {
-  userInfo: undefined,
+  snackBar: {
+    message: "",
+    isOpen: false,
+  },
 };
 
 export const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
-    setUserInfo: (state, action: PayloadAction<User | undefined>) => {
-      return {
-        ...state,
-        userInfo: action.payload,
-      };
+    openSnackBar: (state) => {
+      state.snackBar.isOpen = true;
+    },
+    closeSnackBar: (state) => {
+      state.snackBar.isOpen = false;
+    },
+    setSnackBarMessage: (state, action: PayloadAction<string>) => {
+      state.snackBar.message = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserInfo } = globalSlice.actions;
+export const { openSnackBar, closeSnackBar, setSnackBarMessage } =
+  globalSlice.actions;
 
 export default globalSlice.reducer;
