@@ -2,6 +2,7 @@ import { loadMyInfoAPI } from "@/apis/auth";
 import { addCommentAPI } from "@/apis/tweet";
 import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 import useInput from "@/hooks/useInput";
+import useSnackBar from "@/hooks/useSnackBar";
 import { RootState } from "@/store/store";
 import User from "@/typings/user";
 import { Textarea } from "@mui/joy";
@@ -17,11 +18,13 @@ const TweetCommentForm: FC<Props> = ({ postId }) => {
   const queryClient = useQueryClient();
   const { data: me } = useMyInfoQuery();
   const [comment, handleComment, setComment] = useInput("");
+  const openSnackBar = useSnackBar("댓글 작성이 완료되었습니다.");
 
   const { mutate } = useMutation(addCommentAPI, {
     onSuccess: () => {
       setComment("");
       queryClient.refetchQueries(["tweets"]);
+      openSnackBar();
     },
   });
 

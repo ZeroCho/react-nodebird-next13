@@ -37,7 +37,7 @@ const ClientPage = () => {
       size="small"
       aria-label="close"
       color="inherit"
-      onClick={() => dispatch(closeSnackBar)}
+      onClick={() => dispatch(closeSnackBar())}
     >
       <CloseIcon fontSize="small" />
     </IconButton>
@@ -48,7 +48,7 @@ const ClientPage = () => {
       <Snackbar
         open={isOpen}
         autoHideDuration={3000}
-        onClose={() => dispatch(closeSnackBar)}
+        onClose={() => dispatch(closeSnackBar())}
         message={message}
         action={action}
       />
