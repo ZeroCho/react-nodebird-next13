@@ -15,12 +15,14 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React, { FC, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   comment: Comment;
 }
 
 const TweetComment: FC<Props> = ({ comment }) => {
+  const router = useRouter();
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const toggleDropDown = () => {
     setIsDropDownOpen((pre) => !pre);
@@ -28,7 +30,12 @@ const TweetComment: FC<Props> = ({ comment }) => {
   return (
     <CardHeader
       avatar={
-        <Avatar>{comment.User.nickname && comment.User.nickname[0]}</Avatar>
+        <Avatar
+          onClick={() => router.push(`user/${comment.User.id}`)}
+          sx={{ cursor: "pointer" }}
+        >
+          {comment.User.nickname && comment.User.nickname[0]}
+        </Avatar>
       }
       action={
         <>
