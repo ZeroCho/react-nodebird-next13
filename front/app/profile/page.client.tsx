@@ -24,8 +24,8 @@ const ProfilePage = () => {
     ({ pageParam = 5 }) => loadFollowingsAPI(pageParam),
     {
       getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length < 3) return;
-        return pages.length;
+        if (lastPage.length < pages.length * 5) return;
+        return (pages.length + 1) * 5;
       },
     }
   );
@@ -40,8 +40,8 @@ const ProfilePage = () => {
     ({ pageParam = 5 }) => loadFollowersAPI(pageParam),
     {
       getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length < 3) return;
-        return pages.length;
+        if (lastPage.length < pages.length * 5) return;
+        return (pages.length + 1) * 5;
       },
     }
   );

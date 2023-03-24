@@ -28,28 +28,26 @@ const FollowList: FC<Prop> = ({
 }) => {
   return (
     <>
-      {data.pages.map((page) =>
-        page.map((user) => (
-          <List key={user.id}>
-            <ListItem
-              secondaryAction={
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => unFollowMutate(user.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              }
-            >
-              <ListItemAvatar>
-                <Avatar>{user.nickname[0]}</Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={user.nickname} />
-            </ListItem>
-          </List>
-        ))
-      )}
+      {data.pages[data.pages.length-1].map((user) => (
+        <List key={user.id}>
+          <ListItem
+            secondaryAction={
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={() => unFollowMutate(user.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            }
+          >
+            <ListItemAvatar>
+              <Avatar>{user.nickname[0]}</Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={user.nickname} />
+          </ListItem>
+        </List>
+      ))}
       {hasNextPage && (
         <Button variant="contained" onClick={fetchNextPage}>
           더보기
