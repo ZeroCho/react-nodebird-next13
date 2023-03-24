@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, colors, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import EditUserProfile from "@/components/Users/EditUserProfile";
 import FollowList from "@/components/Users/FollowList";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
@@ -11,8 +11,11 @@ import { loadFollowersAPI, loadFollowingsAPI } from "@/apis/user";
 import { AxiosError } from "axios";
 import useUnFollowMutation from "@/hooks/mutations/useUnFollowMutation";
 import useUnFollowerMutation from "@/hooks/mutations/useUnFollowerMutation";
+import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
+  const router = useRouter();
   const {
     data: followings,
     isLoading: followingsLoading,
@@ -49,6 +52,10 @@ const ProfilePage = () => {
   const { mutate: unFollowMutate } = useUnFollowMutation();
   const { mutate: unFollowerMutate } = useUnFollowerMutation();
 
+  const { data: me } = useMyInfoQuery();
+  useEffect(() => {
+    if (!me) router.push("/");
+  }, [me, router]);
   return (
     <>
       <Box

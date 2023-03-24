@@ -56,8 +56,8 @@ const MyProfile = () => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Avatar>{me?.nickname[0]}</Avatar>
             <Typography
-              variant="h6"
-              component="h6"
+              variant="button"
+              display="block"
               sx={{ padding: "0.3rem", marginLeft: "0.5rem" }}
             >
               {me?.nickname}
