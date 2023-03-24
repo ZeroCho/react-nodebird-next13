@@ -71,6 +71,7 @@ const TweetCardForm = () => {
       });
       mutate(formData);
       setText("");
+      setImagePaths([]);
     },
     [imagePaths, mutate, setText, text]
   );
