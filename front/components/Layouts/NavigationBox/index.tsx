@@ -15,7 +15,13 @@ import { useRouter } from "next/navigation";
 function NavigationBox() {
   const router = useRouter();
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+    <List
+      sx={{
+        minWidth: "12.5rem",
+        maxWidth: 360,
+        bgcolor: "background.paper",
+      }}
+    >
       <ListItem>
         <ListItemButton
           sx={{ padding: "1rem" }}

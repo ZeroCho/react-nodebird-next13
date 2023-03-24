@@ -50,7 +50,7 @@ const MyProfile = () => {
   }, []);
 
   return (
-    <Card sx={{ width: "100%" }}>
+    <Card sx={{ minWidth: "20rem" }}>
       <CardActionArea onClick={handleProfile}>
         <CardContent>
           <Box sx={{ display: "flex", alignItems: "center" }}>

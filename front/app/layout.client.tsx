@@ -4,7 +4,7 @@ import NavigationBox from "@/components/Layouts/NavigationBox";
 import SearchInput from "@/components/Layouts/SearchInput";
 import SignInForm from "@/components/Auth/SignInForm";
 import MyProfile from "@/components/Users/MyProfile";
-import { colors, Container, Grid, Link } from "@mui/material";
+import { colors, Container, Grid, Link, useTheme } from "@mui/material";
 import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 
 export default function ClientLayout({
@@ -16,14 +16,26 @@ export default function ClientLayout({
   return (
     <Container maxWidth="xl">
       <Grid container>
-        <Grid item md={3} sm={12} xs={12}>
+        <Grid item xs={3}>
           <NavigationBox />
         </Grid>
         <Grid
           item
-          md={6}
-          sm={12}
           xs={12}
+          md={3}
+          justifyContent="center"
+          sx={{ padding: "0.8rem" }}
+          display={{ md: "none" }}
+        >
+          {me ? <MyProfile /> : <SignInForm />}
+          <Link href="https://www.zerocho.com/" color={colors.blue[700]}>
+            Made by ZeroCho
+          </Link>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={6}
           justifyContent="center"
           sx={{
             borderRight: "solid",
@@ -38,14 +50,13 @@ export default function ClientLayout({
         </Grid>
         <Grid
           item
-          md={3}
-          sm={12}
           xs={12}
+          md={3}
           justifyContent="center"
           sx={{ padding: "0.8rem" }}
+          display={{ xs: "none", md: "block" }}
         >
           {me ? <MyProfile /> : <SignInForm />}
-
           <Link href="https://www.zerocho.com/" color={colors.blue[700]}>
             Made by ZeroCho
           </Link>
