@@ -45,6 +45,8 @@ const TweetCommentForm: FC<Props> = ({ postId }) => {
     [comment, me, mutate, postId]
   );
 
+  if (!me) return <></>;
+
   return (
     <FormControl
       component="form"

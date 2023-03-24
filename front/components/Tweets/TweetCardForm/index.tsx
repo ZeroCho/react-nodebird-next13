@@ -19,6 +19,7 @@ import Image from "next/image";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import useSnackBar from "@/hooks/useSnackBar";
+import { AxiosError } from "axios";
 
 const TweetCardForm = () => {
   const queryClient = useQueryClient();
@@ -29,6 +30,9 @@ const TweetCardForm = () => {
     onSuccess: () => {
       queryClient.refetchQueries(["tweets"]);
       openSnackBar();
+    },
+    onError: (e: AxiosError) => {
+      alert(e.response?.data);
     },
   });
 
