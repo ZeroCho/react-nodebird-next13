@@ -12,9 +12,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, { FC, useState } from "react";
 import User from "@/typings/user";
 import { InfiniteData, UseMutateFunction } from "@tanstack/react-query";
-import useFollowMutation from "@/hooks/mutations/useFollowMutation";
-import useUnFollowMutation from "@/hooks/mutations/useUnFollowMutation";
-import useUnFollowerMutation from "@/hooks/mutations/useUnFollowerMutation";
 
 interface Prop {
   data: InfiniteData<User[]>;

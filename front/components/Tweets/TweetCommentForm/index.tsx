@@ -6,7 +6,13 @@ import useSnackBar from "@/hooks/useSnackBar";
 import { RootState } from "@/store/store";
 import User from "@/typings/user";
 import { Textarea } from "@mui/joy";
-import { Button, FormControl, List, ListItem } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  FormControl,
+  List,
+  ListItem,
+} from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { FC, FormEvent, useCallback } from "react";
 
@@ -20,7 +26,7 @@ const TweetCommentForm: FC<Props> = ({ postId }) => {
   const [comment, handleComment, setComment] = useInput("");
   const openSnackBar = useSnackBar("댓글 작성이 완료되었습니다.");
 
-  const { mutate } = useMutation(addCommentAPI, {
+  const { mutate, isLoading } = useMutation(addCommentAPI, {
     onSuccess: () => {
       setComment("");
       queryClient.refetchQueries(["tweets"]);
@@ -62,7 +68,7 @@ const TweetCommentForm: FC<Props> = ({ postId }) => {
         </ListItem>
         <ListItem>
           <Button variant="contained" type="submit">
-            댓글 작성
+            {isLoading ? <CircularProgress size="1.5rem" /> : "댓글 작성"}
           </Button>
         </ListItem>
       </List>

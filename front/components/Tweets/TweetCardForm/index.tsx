@@ -4,7 +4,14 @@ import { addPostAPI, uploadImagesAPI } from "@/apis/tweet";
 import useInput from "@/hooks/useInput";
 import { Textarea } from "@mui/joy";
 import FormControl from "@mui/joy/FormControl";
-import { Badge, Button, Grid, IconButton, Snackbar } from "@mui/material";
+import {
+  Badge,
+  Button,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Snackbar,
+} from "@mui/material";
 import List from "@mui/material/List/List";
 import ListItem from "@mui/material/ListItem/ListItem";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -18,7 +25,7 @@ const TweetCardForm = () => {
   const [text, handleText, setText] = useInput("");
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const openSnackBar = useSnackBar("게시글 작성이 완료되었습니다");
-  const { mutate } = useMutation(addPostAPI, {
+  const { mutate, isLoading } = useMutation(addPostAPI, {
     onSuccess: () => {
       queryClient.refetchQueries(["tweets"]);
       openSnackBar();
@@ -111,7 +118,7 @@ const TweetCardForm = () => {
           </ListItem>
           <ListItem>
             <Button variant="contained" type="submit">
-              짹짹
+              {isLoading ? <CircularProgress size="1.5rem" /> : "짹쨱"}
             </Button>
             <input
               type="file"
