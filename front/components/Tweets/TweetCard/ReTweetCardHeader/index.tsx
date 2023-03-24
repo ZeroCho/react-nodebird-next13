@@ -25,7 +25,7 @@ const ReTweetCardHeader: FC<Props> = ({ data }) => {
         title={
           <>
             {`"${data.User.nickname}" 님이 리트윗 하셨습니다.`}
-            {me?.id !== data.User.id && <FollowButton user={data.User} />}
+            {me && me.id !== data.User.id && <FollowButton user={data.User} />}
           </>
         }
         avatar={<UserAvatar user={data.User} />}
