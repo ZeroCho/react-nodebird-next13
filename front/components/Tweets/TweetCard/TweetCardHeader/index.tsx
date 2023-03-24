@@ -44,7 +44,7 @@ const TweetCardHeader: FC<Props> = ({
         title={
           <>
             {user.nickname}
-            {me?.id !== user.id && <FollowButton user={user} />}
+            {me && me.id !== user.id && <FollowButton user={user} />}
           </>
         }
         subheader={dayjs(createdAt).format("YYYY.MM.DD")}
