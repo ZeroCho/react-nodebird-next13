@@ -18,7 +18,7 @@ const ClientPage: FC<Props> = ({ params }) => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<Tweet[]>(
-    ["hashtag", tag],
+    ["tweets", "hashtag", tag],
     ({ pageParam = "" }) => loadHashtagPostsAPI(tag, pageParam),
     {
       getNextPageParam: (lastPage) => {
