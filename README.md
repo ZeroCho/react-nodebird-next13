@@ -53,6 +53,14 @@ yarn dev
 ```
 
 
+## 시연 영상
+- 회원가입, 로그인 게시글 작성, 댓글, 이름변경 시연
+- 추가적인 기능은 직접 테스트 해보시길 바랍니다.
+
+https://user-images.githubusercontent.com/49224104/227564450-e8699bc2-d71f-4b40-891b-284fd4e9dfa7.mp4
+
+
+
 
 
 
