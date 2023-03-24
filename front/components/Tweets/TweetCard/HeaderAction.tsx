@@ -1,4 +1,10 @@
-import { IconButton, List, ListItemButton, Paper } from "@mui/material";
+import {
+  CircularProgress,
+  IconButton,
+  List,
+  ListItemButton,
+  Paper,
+} from "@mui/material";
 import React, { FC, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReportIcon from "@mui/icons-material/Report";
@@ -20,14 +26,12 @@ const HeaderAction: FC<Props> = ({ postId, user, toggleReportModal }) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   const { data: me } = useMyInfoQuery();
-  const { mutate: removePostMutate } = useMutation(
-    () => removePostAPI(postId),
-    {
+  const { mutate: removePostMutate, isLoading: removePostIsLoading } =
+    useMutation(() => removePostAPI(postId), {
       onSuccess: () => {
         queryClient.refetchQueries(["tweets"]);
       },
-    }
-  );
+    });
 
   const toggleDropDown = () => {
     setIsDropDownOpen((pre) => !pre);
@@ -47,7 +51,11 @@ const HeaderAction: FC<Props> = ({ postId, user, toggleReportModal }) => {
         <List disablePadding>
           {me?.id === user.id ? (
             <ListItemButton onClick={() => removePostMutate()}>
-              <DeleteIcon />
+              {removePostIsLoading ? (
+                <CircularProgress size="1.5rem" />
+              ) : (
+                <DeleteIcon />
+              )}
             </ListItemButton>
           ) : (
             <ListItemButton onClick={toggleReportModal}>

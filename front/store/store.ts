@@ -1,12 +1,11 @@
 import { globalSlice } from "@/reducers/slice";
 import { configureStore } from "@reduxjs/toolkit";
 
-export const store = (userInfo?: any) => {
+export const store = () => {
   return configureStore({
     reducer: {
       global: globalSlice.reducer,
     },
-    preloadedState: { global: { userInfo: userInfo } },
   });
 };
 type StoreType = ReturnType<typeof store>;

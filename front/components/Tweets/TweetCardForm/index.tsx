@@ -4,29 +4,35 @@ import { addPostAPI, uploadImagesAPI } from "@/apis/tweet";
 import useInput from "@/hooks/useInput";
 import { Textarea } from "@mui/joy";
 import FormControl from "@mui/joy/FormControl";
-import { Badge, Button, Grid, IconButton, Snackbar } from "@mui/material";
+import {
+  Badge,
+  Button,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Snackbar,
+} from "@mui/material";
 import List from "@mui/material/List/List";
 import ListItem from "@mui/material/ListItem/ListItem";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import CloseIcon from "@mui/icons-material/Close";
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  FormEvent,
-  useCallback,
-  useState,
-} from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import useSnackBar from "@/hooks/useSnackBar";
+import { AxiosError } from "axios";
 
 const TweetCardForm = () => {
   const queryClient = useQueryClient();
-  const [showSnackBar, setShowSnackBar] = useState(false);
   const [text, handleText, setText] = useInput("");
   const [imagePaths, setImagePaths] = useState<string[]>([]);
-  const { mutate } = useMutation(addPostAPI, {
+  const openSnackBar = useSnackBar("게시글 작성이 완료되었습니다");
+  const { mutate, isLoading } = useMutation(addPostAPI, {
     onSuccess: () => {
       queryClient.refetchQueries(["tweets"]);
-      setShowSnackBar(true);
+      openSnackBar();
+    },
+    onError: (e: AxiosError) => {
+      alert(e.response?.data);
     },
   });
 
@@ -69,32 +75,8 @@ const TweetCardForm = () => {
     [imagePaths, mutate, setText, text]
   );
 
-  const toggleSnackBar = () => {
-    setShowSnackBar((pre) => !pre);
-  };
-
-  const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={toggleSnackBar}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
-
   return (
     <>
-      <Snackbar
-        open={showSnackBar}
-        autoHideDuration={3000}
-        onClose={toggleSnackBar}
-        message="게시글이 성공적으로 작성되었습니다."
-        action={action}
-      />
       <FormControl component="form" onSubmit={handleSubmit}>
         <List>
           <ListItem>
@@ -140,7 +122,7 @@ const TweetCardForm = () => {
           </ListItem>
           <ListItem>
             <Button variant="contained" type="submit">
-              짹짹
+              {isLoading ? <CircularProgress size="1.5rem" /> : "짹쨱"}
             </Button>
             <input
               type="file"

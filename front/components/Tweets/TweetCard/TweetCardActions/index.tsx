@@ -1,4 +1,4 @@
-import { CardActions, IconButton } from "@mui/material";
+import { CardActions, CircularProgress, IconButton } from "@mui/material";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import ChatIcon from "@mui/icons-material/Chat";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -29,14 +29,17 @@ const TweetCardActions: FC<Props> = ({
   const isLiked = likers.find((v) => me?.id && v.id === me.id);
   const queryClient = useQueryClient();
 
-  const { mutate: reTweetMutation } = useMutation(retweetAPI, {
-    onError: (e: AxiosError) => {
-      alert(e.response?.data);
-    },
-    onSuccess: (data) => {
-      queryClient.refetchQueries(["tweets"]);
-    },
-  });
+  const { mutate: reTweetMutation, isLoading: reTweetIsLoading } = useMutation(
+    retweetAPI,
+    {
+      onError: (e: AxiosError) => {
+        alert(e.response?.data);
+      },
+      onSuccess: (data) => {
+        queryClient.refetchQueries(["tweets"]);
+      },
+    }
+  );
 
   const toggleComment = () => {
     setIsCommentOpen((pre) => !pre);
@@ -53,7 +56,7 @@ const TweetCardActions: FC<Props> = ({
   return (
     <CardActions disableSpacing>
       <IconButton onClick={handleReTweet}>
-        <RepeatIcon />
+        {reTweetIsLoading ? <CircularProgress size="1.5rem" /> : <RepeatIcon />}
       </IconButton>
       <IconButton
         onClick={

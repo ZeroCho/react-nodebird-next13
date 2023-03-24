@@ -5,6 +5,7 @@ import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
 import useInput from "@/hooks/useInput";
 import {
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   TextField,
@@ -18,7 +19,7 @@ const EditUserProfile = () => {
   const { data: me } = useMyInfoQuery();
   const [editNickname, handleEditNickname, setEditNickname] =
     useInput<string>("");
-  const { mutate } = useMutation(changeNicknameAPI, {
+  const { mutate, isLoading } = useMutation(changeNicknameAPI, {
     onSuccess: () => {
       queryClient.refetchQueries(["user"]);
       alert("변경이 완료되었습니다");
@@ -60,7 +61,7 @@ const EditUserProfile = () => {
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" type="submit">
-            정보 수정
+            {isLoading ? <CircularProgress size="1.5rem" /> : "정보 수정"}
           </Button>
         </Grid>
       </Grid>

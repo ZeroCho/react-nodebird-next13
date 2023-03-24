@@ -1,10 +1,15 @@
 "use client";
 
-import { loadMyInfoAPI, signInAPI } from "@/apis/auth";
-import useMyInfoQuery from "@/hooks/queries/useMyInfoQuery";
+import { signInAPI } from "@/apis/auth";
 import useInput from "@/hooks/useInput";
-import { setUserInfo } from "@/reducers/slice";
-import { Box, Button, colors, Grid, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  colors,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useState } from "react";
@@ -15,7 +20,7 @@ function SignInForm() {
   const router = useRouter();
   const [email, handleEmail] = useInput("");
   const [password, handlePassword] = useInput("");
-  const { mutate } = useMutation(signInAPI, {
+  const { mutate, isLoading } = useMutation(signInAPI, {
     onError: (error: any) => {
       alert(error.response?.data);
     },
@@ -62,7 +67,7 @@ function SignInForm() {
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" onClick={handleForm}>
-            로그인
+            로그인{isLoading && <CircularProgress size={12} />}
           </Button>
           <Button variant="outlined" onClick={() => router.push("/signup")}>
             회원가입
