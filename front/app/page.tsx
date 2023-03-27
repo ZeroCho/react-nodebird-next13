@@ -1,8 +1,14 @@
+import { loadPostsAPI } from "@/apis/tweet";
 import React from "react";
 import ClientPage from "./page.client";
 
 const Page = async () => {
-  return <ClientPage />;
+  const data = await loadPostsAPI(undefined);
+  const initialData = {
+    pages: [data],
+    pageParams: [undefined],
+  };
+  return <ClientPage initialData={initialData} />;
 };
 
 export default Page;

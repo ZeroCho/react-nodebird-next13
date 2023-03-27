@@ -5,6 +5,7 @@ import TweetCardList from "@/components/Tweets/TweetCardList";
 import UserProfile from "@/components/Users/UserProfile";
 import Tweet from "@/typings/tweet";
 import {
+  InfiniteData,
   useInfiniteQuery,
   useQuery,
   useQueryClient,
@@ -15,9 +16,14 @@ import React, { FC } from "react";
 interface ClientPageProps {
   params: { id: string };
   initialUserInfo: any;
+  initialPostData: InfiniteData<Tweet[]>;
 }
 
-const ClientPage: FC<ClientPageProps> = ({ params, initialUserInfo }) => {
+const ClientPage: FC<ClientPageProps> = ({
+  params,
+  initialUserInfo,
+  initialPostData,
+}) => {
   const id = params.id;
   const {
     data,
@@ -31,6 +37,8 @@ const ClientPage: FC<ClientPageProps> = ({ params, initialUserInfo }) => {
       getNextPageParam: (lastPage) => {
         return lastPage?.[lastPage.length - 1]?.id;
       },
+      initialData: initialPostData,
+      enabled: false,
     }
   );
   const { data: userInfo } = useQuery(

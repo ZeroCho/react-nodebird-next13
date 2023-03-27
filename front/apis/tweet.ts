@@ -14,9 +14,9 @@ export function loadPostAPI(data: number) {
   return api.get(`/post/${data}`).then((response) => response.data);
 }
 
-export function loadHashtagPostsAPI(data: string, lastId?: number) {
+export function loadHashtagPostsAPI<T>(data: string, lastId?: number) {
   return api
-    .get(`/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}`)
+    .get<T>(`/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}`)
     .then((response) => response.data);
 }
 
