@@ -3,8 +3,8 @@
 
 
 ### 블로그 후기
-https://throwfe.tistory.com/23
-
+[https://yoonhaemin.com/tag/review/react-nodebird/
+](https://yoonhaemin.com/tag/review/react-nodebird/)
 
 
 ## 요구사항
